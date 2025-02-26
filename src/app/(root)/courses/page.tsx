@@ -1,7 +1,7 @@
+import { getAccount } from "@/actions/auth.action";
+import { redirect } from "next/navigation";
 import React from "react";
 
-import { redirect } from "next/navigation";
-import { getAccount } from "@/actions/auth.action";
 const Page = async () => {
   const account = await getAccount();
   if (!account) {

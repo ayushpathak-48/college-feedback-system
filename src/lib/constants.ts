@@ -31,6 +31,13 @@ export const routes = [
     accessible: ["admin"],
   },
   {
+    label: "Faculty Members",
+    href: "/faculty-members",
+    icon: UserSquareIcon,
+    activeIcon: UserSquareIcon,
+    accessible: ["admin"],
+  },
+  {
     label: "Students",
     href: "/students",
     icon: UsersIcon,
@@ -38,8 +45,8 @@ export const routes = [
     accessible: ["admin"],
   },
   {
-    label: "Streams",
-    href: "/streams",
+    label: "Courses",
+    href: "/courses",
     icon: HashIcon,
     activeIcon: HashIcon,
     accessible: ["admin"],

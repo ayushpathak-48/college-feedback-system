@@ -4,6 +4,11 @@ export type FacultyType = Models.Document & {
   name: string;
 };
 
+export type FacultyMemberType = Models.Document & {
+  facullty_id: string;
+  name: string;
+};
+
 export type StudentType = Models.Document & {
   email: string;
   name: string;

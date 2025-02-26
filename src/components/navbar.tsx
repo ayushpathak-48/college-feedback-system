@@ -11,15 +11,19 @@ const pathnameMap = {
     description: "View all feedback list here submitted by students",
   },
   faculties: {
-    title: "Faculties List",
+    title: "All Faculties",
     description: "View and manage faculties list here",
   },
+  "faculty-members": {
+    title: "All Faculties Members",
+    description: "View and manage faculty members list here",
+  },
   students: {
-    title: "Students List",
+    title: "All Students",
     description: "View and manage students list here",
   },
-  streams: {
-    title: "Streams List",
+  courses: {
+    title: "All Courses",
     description: "View and manage all streams list here",
   },
   "submit-feedback": {
@@ -40,7 +44,6 @@ const defaultMap = {
 export const Navbar = () => {
   const pathname = usePathname();
   const pathnameParts = pathname.split("/");
-  console.log({ pathnameParts });
   const pathnameKey = pathnameParts[1] as keyof typeof pathnameMap;
 
   const { title, description } = pathnameMap[pathnameKey] || defaultMap;

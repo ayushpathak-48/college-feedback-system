@@ -8,8 +8,8 @@ import {
   SignUpSchema,
 } from "@/schema/auth.schema";
 
-import { ID, OAuthProvider } from "node-appwrite";
-import { cookies, headers } from "next/headers";
+import { ID } from "node-appwrite";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function signInAccount(form: SigninType) {
@@ -125,26 +125,4 @@ export const signOutUser = async () => {
   } catch {
     return null;
   }
-};
-
-export const signUpWithGoogle = async () => {
-  const { account } = await createAdminClient();
-  const origin = (await headers()).get("origin");
-  const redirecturl = await account.createOAuth2Token(
-    OAuthProvider.Google,
-    `${origin}/oauth`,
-    `${origin}/sign-up`
-  );
-  return redirect(redirecturl);
-};
-
-export const signUpWithGitHub = async () => {
-  const { account } = await createAdminClient();
-  const origin = (await headers()).get("origin");
-  const redirecturl = await account.createOAuth2Token(
-    OAuthProvider.Github,
-    `${origin}/oauth`,
-    `${origin}/sign-up`
-  );
-  return redirect(redirecturl);
 };
