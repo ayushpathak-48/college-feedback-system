@@ -1,9 +1,9 @@
 "use server";
 
-import { createSessionClient } from "@/lib/appwrite/client";
+import { createAdminClient, createSessionClient } from "@/lib/appwrite/client";
 import { FacultySchema, FacultySchemaType } from "@/schema/faculty.schema";
 
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
 import { CoursesType, FacultyMemberType, FacultyType } from "@/types";
 import {
@@ -11,6 +11,9 @@ import {
   FacultyMembersSchemaType,
 } from "@/schema/faculty-members.schema";
 import { CourseSchema, CourseSchemaType } from "@/schema/course.schema";
+import { StudentSchema, StudentSchemaType } from "@/schema/students.schema";
+import { deleteAccount, signUpAccount } from "./auth.action";
+import { defaultStudentPassword } from "@/lib/constants";
 
 // Faculty Actions
 export async function getAllFaculties() {
@@ -96,15 +99,6 @@ export async function getAllFacultyMembers() {
       appwriteConfig.databaseId,
       appwriteConfig.facultyMembersCollectionId
     );
-    // const populatedFacultyMembers = await Promise.all(
-    //   allFacultyMembers.documents.map(async (member) => {
-    //     const singleFaculty = (await getFacultyById(member.faculty_id)).data;
-    //     return {
-    //       ...member,
-    //       faculty: singleFaculty,
-    //     };
-    //   })
-    // );
     return {
       success: true,
       message: "All faculty members",
@@ -202,7 +196,7 @@ export async function addNewCourse(form: CourseSchemaType) {
   } catch (error) {
     return {
       success: false,
-      message: "Failed to add faculty member",
+      message: "Failed to add course",
       error,
     };
   }
@@ -212,53 +206,90 @@ export async function addNewCourse(form: CourseSchemaType) {
 export async function getAllStudents() {
   try {
     const { databases } = await createSessionClient();
-    const allCourses = await databases.listDocuments<CoursesType>(
+    const allStudents = await databases.listDocuments<CoursesType>(
       appwriteConfig.databaseId,
       appwriteConfig.studentsCollectionId
     );
     return {
       success: true,
-      message: "All courses",
-      data: allCourses,
+      message: "All Students",
+      data: allStudents,
     };
   } catch (error) {
     return {
       success: false,
-      message: "Failed to get courses",
+      message: "Failed to get students",
       error,
     };
   }
 }
 
-export async function addNewStudent(form: CourseSchemaType) {
-  const parsedBody = CourseSchema.safeParse(form);
+export async function addNewStudent(form: StudentSchemaType) {
+  const parsedBody = StudentSchema.safeParse(form);
   if (!parsedBody.success) {
     throw new Error(parsedBody.error.message);
   }
 
-  const { name, faculty_id, total_semesters } = parsedBody.data;
+  const studentAccount = await signUpAccount({
+    name: form.name,
+    email: form.email,
+    password: defaultStudentPassword,
+  });
+
+  if (!studentAccount.success || !studentAccount.data) {
+    return {
+      success: false,
+      message: "Failed to add student",
+      error: studentAccount.error,
+    };
+  }
+
+  const { users } = await createAdminClient();
+  await users.updateLabels(studentAccount.data.$id, ["student"]);
+
+  const { gender, course_id, current_semester, email, enrollment_id } =
+    parsedBody.data;
 
   try {
     const { databases } = await createSessionClient();
-    const createdCourse = await databases.createDocument(
+
+    const isEnrollmentAlreadyTaken = await databases.listDocuments(
       appwriteConfig.databaseId,
-      appwriteConfig.coursesCollectionId,
+      appwriteConfig.studentsCollectionId,
+      [Query.equal("enrollment_id", enrollment_id)]
+    );
+
+    if (isEnrollmentAlreadyTaken.total > 0) {
+      await deleteAccount(studentAccount.data.$id);
+      return {
+        success: false,
+        message: "Failed to add student",
+        error: "Enrollment Id is already taken",
+      };
+    }
+
+    const createdStudent = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.studentsCollectionId,
       ID.unique(),
       {
-        faculty: faculty_id,
-        name,
-        total_semesters: parseInt(total_semesters),
+        course: course_id,
+        current_semester: parseInt(current_semester),
+        email_id: email,
+        gender,
+        enrollment_id,
       }
     );
     return {
       success: true,
-      message: "Course added Successfully",
-      data: createdCourse,
+      message: "Student added Successfully",
+      data: createdStudent,
     };
   } catch (error) {
+    await deleteAccount(studentAccount.data.$id);
     return {
       success: false,
-      message: "Failed to add faculty member",
+      message: "Failed to add student",
       error,
     };
   }

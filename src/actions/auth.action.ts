@@ -59,28 +59,26 @@ export async function signUpAccount(form: SignupType) {
       user.password,
       user.name
     );
-    if (!newAccount) throw Error;
-    const session = await account.createEmailPasswordSession(
-      user.email,
-      user.password
-    );
-    const oneYear = 365 * 24 * 60 * 60 * 1000;
-    const cookie = await cookies();
-    cookie.set(
-      process.env.NEXT_PUBLIC_APP_SESSION_COOKIE_NAME!,
-      session.secret,
-      {
-        path: "/",
-        httpOnly: true,
-        sameSite: "strict",
-        secure: true,
-        expires: Date.now() + oneYear,
-      }
-    );
 
-    return { success: true, message: "Sign In Successfully", data: newAccount };
+    return { success: true, message: "Sign Up successfull", data: newAccount };
   } catch (error) {
-    return JSON.parse(JSON.stringify(error));
+    return { success: false, message: "Sign Up failed", error };
+  }
+}
+
+export async function deleteAccount(id: string) {
+  const { users } = await createAdminClient();
+
+  try {
+    const deletedAccount = await users.delete(id);
+
+    return {
+      success: true,
+      message: "Sign Up successfull",
+      data: deletedAccount,
+    };
+  } catch (error) {
+    return { success: false, message: "Sign Up failed", error };
   }
 }
 
@@ -91,28 +89,6 @@ export async function getAccount() {
     return currentAccount;
   } catch {
     return null;
-  }
-}
-
-export async function verifyEmail() {
-  try {
-    const { account } = await createSessionClient();
-    const verifyEmail = await account.createVerification(
-      window.location.origin + "/verify-account"
-    );
-    return verifyEmail;
-  } catch (error) {
-    return error;
-  }
-}
-
-export async function updateVerification(userId: string, secret: string) {
-  try {
-    const { account } = await createAdminClient();
-    const verifyEmail = await account.updateVerification(userId, secret);
-    return verifyEmail;
-  } catch (error) {
-    return error;
   }
 }
 

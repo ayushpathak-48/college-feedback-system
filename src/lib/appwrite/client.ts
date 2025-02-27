@@ -1,5 +1,5 @@
 "use server";
-import {appwriteConfig} from "./config";
+import { appwriteConfig } from "./config";
 import {
   Client,
   Account,
@@ -8,7 +8,7 @@ import {
   Users,
   Storage,
 } from "node-appwrite";
-import {cookies} from "next/headers";
+import { cookies } from "next/headers";
 
 export async function createSessionClient() {
   const client = new Client()
@@ -24,7 +24,6 @@ export async function createSessionClient() {
     get account() {
       return new Account(client);
     },
-
     get databases() {
       return new Databases(client);
     },

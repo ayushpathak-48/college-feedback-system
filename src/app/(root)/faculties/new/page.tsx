@@ -38,7 +38,7 @@ const Page = () => {
         toast.success(`Faculty added successfully`);
         form.setValue("name", "");
       } else {
-        toast.error(`Failed to add faculty`);
+        toast.error(`Failed to add faculty  Error: ${response.error}`);
       }
     } catch (error) {
       console.log(error);

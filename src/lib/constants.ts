@@ -66,3 +66,5 @@ export const routes = [
     accessible: ["students"],
   },
 ];
+
+export const defaultStudentPassword = "12345678";

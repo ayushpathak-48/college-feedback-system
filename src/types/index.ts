@@ -1,5 +1,11 @@
 import { Models } from "node-appwrite";
 
+export enum GENDER {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
+}
+
 export type FacultyType = Models.Document & {
   name: string;
 };

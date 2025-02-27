@@ -49,7 +49,7 @@ const CourseForm = ({ faculties }: { faculties: FacultyType[] }) => {
         form.setFocus("total_semesters");
         form.setValue("total_semesters", "");
       } else {
-        toast.error(`Failed to add Course`);
+        toast.error(`Failed to add course  Error: ${response.error}`);
       }
     } catch (error) {
       console.log(error);

@@ -43,7 +43,7 @@ export const SignUpCard = () => {
         toast.success(`Signup Successfull`);
         router.push("/workspaces/create");
       } else {
-        toast.error(`Error: Failed to signup`);
+        toast.error(`Error: Failed to signup  Error: ${response.error}`);
       }
     } catch (error) {
       console.log(error);

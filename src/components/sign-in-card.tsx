@@ -34,12 +34,11 @@ export const SignInCard = () => {
     setIsLoading(true);
     try {
       const response = await signInAccount(values);
-      console.log({ response });
       if (response.success) {
         toast.success(`SignIn Successfull`);
         window.location.href = "/";
       } else {
-        toast.error(`Error: Failed to Sign In`);
+        toast.error(`Error: Failed to Sign In  Error: ${response.error}`);
       }
     } catch (error) {
       console.log(error);

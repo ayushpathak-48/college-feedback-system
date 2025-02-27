@@ -51,11 +51,11 @@ const FacultyMemberForm = ({ faculties }: { faculties: FacultyType[] }) => {
         toast.success(`Faculty member added successfully`);
         form.setValue("name", "");
       } else {
-        toast.error(`Failed to add faculty member`);
+        toast.error(`Failed to add faculty member  Error: ${response.error}`);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to add faculty");
+      toast.error("Failed to add faculty member");
     }
     setIsLoading(false);
   };
@@ -109,7 +109,7 @@ const FacultyMemberForm = ({ faculties }: { faculties: FacultyType[] }) => {
                     <Input
                       {...field}
                       type="text"
-                      placeholder="Enter faculty name"
+                      placeholder="Enter faculty member name"
                     />
                   </FormControl>
                   <FormMessage />
