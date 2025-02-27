@@ -4,6 +4,8 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { getAccount } from "@/actions/auth.action";
 import { getAllFaculties } from "@/actions/admin.actions";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Page = async () => {
   const account = await getAccount();
@@ -14,7 +16,15 @@ const Page = async () => {
 
   return (
     <div>
-      <DataTable columns={columns} data={facultiesData ?? []} />
+      <DataTable
+        columns={columns}
+        data={facultiesData ?? []}
+        headerButton={
+          <Button asChild>
+            <Link href={"/faculties/new"}>Add Faculty</Link>
+          </Button>
+        }
+      />
     </div>
   );
 };

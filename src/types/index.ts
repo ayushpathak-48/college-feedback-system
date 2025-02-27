@@ -5,8 +5,14 @@ export type FacultyType = Models.Document & {
 };
 
 export type FacultyMemberType = Models.Document & {
-  facullty_id: string;
+  faculty: string;
   name: string;
+};
+
+export type CoursesType = Models.Document & {
+  name: string;
+  faculty: string;
+  total_semesters: number;
 };
 
 export type StudentType = Models.Document & {

@@ -21,18 +21,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  headerButton?: ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  headerButton,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -62,9 +63,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <Button asChild>
-          <Link href={"/faculties/new"}>Add Faculty</Link>
-        </Button>
+        {headerButton ? headerButton : <></>}
       </div>
       <div className="rounded-md border">
         <Table>

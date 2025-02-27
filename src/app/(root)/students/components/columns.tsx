@@ -5,24 +5,23 @@ import { FeedbackType } from "@/types";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 
 export const columns: ColumnDef<FeedbackType>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "enrollment_id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Id
+          Enrollment Id
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      return <p className="line-clamp-1">{row.index + 1}</p>;
+      return <p className="line-clamp-1">{row.original.enrollment_id}</p>;
     },
   },
   {
@@ -48,89 +47,67 @@ export const columns: ColumnDef<FeedbackType>[] = [
     },
   },
   {
-    accessorKey: "faculty",
+    accessorKey: "email_id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Faculty
+          Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const faculty = row.original.faculty;
+      const email_id = row.original.email_id;
       return (
         <div>
-          <span className={cn("truncate")}>{faculty.name}</span>
+          <span className={cn("truncate")}>{email_id}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "rating",
+    accessorKey: "division",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Rating
+          Division
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const rating = row.original.rating;
+      const division = row.original.division;
       return (
         <div>
-          <span className={cn("truncate")}>{rating}</span>
+          <span className={cn("truncate")}>{division}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "comment",
+    accessorKey: "current_semester",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Comment
+          Sem
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const comment = row.original.comment;
+      const current_semester = row.original.current_semester;
       return (
         <div>
-          <span className={cn("truncate")}>{comment}</span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "dueDate",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Submitted on
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const createdAt = row.original.$createdAt;
-      return (
-        <div>
-          <span className={cn("truncate")}>{format(createdAt, "PPP")}</span>
+          <span className={cn("truncate")}>{current_semester}</span>
         </div>
       );
     },
