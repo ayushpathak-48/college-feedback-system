@@ -22,7 +22,7 @@ export type CoursesType = Models.Document & {
 };
 
 export type StudentType = Models.Document & {
-  email: string;
+  email_id: string;
   name: string;
   division: string;
   stream: string;

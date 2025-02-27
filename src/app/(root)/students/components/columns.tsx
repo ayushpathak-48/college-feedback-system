@@ -1,12 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { FeedbackType } from "@/types";
+import { StudentType } from "@/types";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export const columns: ColumnDef<FeedbackType>[] = [
+export const columns: ColumnDef<StudentType>[] = [
   {
     accessorKey: "enrollment_id",
     header: ({ column }) => {
@@ -69,23 +69,53 @@ export const columns: ColumnDef<FeedbackType>[] = [
     },
   },
   {
-    accessorKey: "division",
+    accessorKey: "gender",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Division
+          Gender
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const division = row.original.division;
+      const gender = row.original.gender;
       return (
-        <div>
-          <span className={cn("truncate")}>{division}</span>
+        <div className="flex items-center justify-center">
+          <span className={cn("truncate capitalize")}>
+            {gender.toLowerCase()}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "course",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Course & Faculty
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const course = row.original.course;
+      return (
+        <div className="flex flex-col gap-1">
+          <span className={cn("truncate text-xs")}>
+            <span className="font-semibold">Faculty</span>:{" "}
+            {course.faculty.name}
+          </span>
+          <span className={cn("truncate text-xs")}>
+            <span className="font-semibold">Course</span>: {course.name}
+          </span>
         </div>
       );
     },
@@ -106,7 +136,7 @@ export const columns: ColumnDef<FeedbackType>[] = [
     cell: ({ row }) => {
       const current_semester = row.original.current_semester;
       return (
-        <div>
+        <div className="flex items-center justify-center">
           <span className={cn("truncate")}>{current_semester}</span>
         </div>
       );

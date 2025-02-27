@@ -5,7 +5,12 @@ import { FacultySchema, FacultySchemaType } from "@/schema/faculty.schema";
 
 import { ID, Query } from "node-appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
-import { CoursesType, FacultyMemberType, FacultyType } from "@/types";
+import {
+  CoursesType,
+  FacultyMemberType,
+  FacultyType,
+  StudentType,
+} from "@/types";
 import {
   FacultyMembersSchema,
   FacultyMembersSchemaType,
@@ -206,10 +211,11 @@ export async function addNewCourse(form: CourseSchemaType) {
 export async function getAllStudents() {
   try {
     const { databases } = await createSessionClient();
-    const allStudents = await databases.listDocuments<CoursesType>(
+    const allStudents = await databases.listDocuments<StudentType>(
       appwriteConfig.databaseId,
       appwriteConfig.studentsCollectionId
     );
+
     return {
       success: true,
       message: "All Students",
@@ -273,6 +279,7 @@ export async function addNewStudent(form: StudentSchemaType) {
       appwriteConfig.studentsCollectionId,
       ID.unique(),
       {
+        name,
         course: course_id,
         current_semester: parseInt(current_semester),
         email_id: email,
