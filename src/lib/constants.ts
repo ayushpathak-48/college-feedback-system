@@ -56,7 +56,7 @@ export const routes = [
     href: "/submit-feedback",
     icon: ClipboardListIcon,
     activeIcon: ClipboardListIcon,
-    accessible: ["students"],
+    accessible: ["student"],
   },
   {
     label: "Reports",

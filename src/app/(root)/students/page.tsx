@@ -11,6 +11,7 @@ const Page = async () => {
   if (!account) {
     return redirect("/sign-in");
   }
+  if (!account.labels.includes("admin")) return redirect("/");
 
   const data = (await getAllStudents()).data?.documents;
 

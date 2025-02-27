@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 // import { UserButton } from "@/components/user-button";
-import React from "react";
+import React, { useEffect } from "react";
 import { MobileSidebar } from "@/components/mobile-sidebar";
 import { usePathname } from "next/navigation";
+import { Models } from "node-appwrite";
+import { useUserStore } from "@/stores/user.store";
 
 const pathnameMap = {
   feedbacks: {
@@ -41,12 +44,16 @@ const defaultMap = {
   description: "Monitor all your projects and tasks here",
 };
 
-export const Navbar = () => {
+export const Navbar = ({ account }: { account: Models.User<any> }) => {
   const pathname = usePathname();
   const pathnameParts = pathname.split("/");
   const pathnameKey = pathnameParts[1] as keyof typeof pathnameMap;
-
   const { title, description } = pathnameMap[pathnameKey] || defaultMap;
+  const setUser = useUserStore((state) => state.setUser);
+
+  useEffect(() => {
+    setUser(account);
+  }, [account, setUser]);
 
   return (
     <nav className="pt-4 px-6 flex items-center justify-between">

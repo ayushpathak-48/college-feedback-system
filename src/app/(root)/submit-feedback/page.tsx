@@ -7,6 +7,7 @@ const Page = async () => {
   if (!account) {
     return redirect("/sign-in");
   }
+
   return <div>Page</div>;
 };
 
