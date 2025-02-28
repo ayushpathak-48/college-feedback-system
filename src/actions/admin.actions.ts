@@ -481,7 +481,7 @@ export async function addNewStudent(form: StudentSchemaType) {
 
 export async function getAllStudents() {
   try {
-    const allStudents = await getAllDocuments(
+    const allStudents = await getAllDocuments<StudentType>(
       appwriteConfig.studentsCollectionId
     );
 
