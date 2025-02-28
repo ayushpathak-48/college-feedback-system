@@ -6,6 +6,7 @@ import { Navigation } from "@/components/navigation";
 import { APP_TITLE } from "@/lib/constants";
 import { Button } from "./ui/button";
 import { signOutUser } from "@/actions/auth.action";
+import { LogOut } from "lucide-react";
 
 export const Sidebar = () => {
   return (
@@ -24,7 +25,7 @@ export const Sidebar = () => {
           variant={"outline"}
           className="w-full mt-auto"
         >
-          Logout{" "}
+          Logout <LogOut />
         </Button>
       </div>
     </aside>

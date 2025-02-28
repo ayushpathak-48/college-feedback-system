@@ -25,7 +25,12 @@ import {
   FacultyMembersSchemaType,
 } from "@/schema/faculty-members.schema";
 import { CourseSchema, CourseSchemaType } from "@/schema/course.schema";
-import { StudentSchema, StudentSchemaType } from "@/schema/students.schema";
+import {
+  EditStudentSchema,
+  EditStudentSchemaType,
+  StudentSchema,
+  StudentSchemaType,
+} from "@/schema/students.schema";
 import { deleteAccount, getAccount, signUpAccount } from "./auth.action";
 import { defaultStudentPassword } from "@/lib/constants";
 import { FeedbackSchema, FeedbackSchemaType } from "@/schema/feedback.schema";
@@ -351,6 +356,29 @@ export async function getAllCourses() {
   }
 }
 
+export async function getCourseById(id: string) {
+  try {
+    const { databases } = await createSessionClient();
+    const singleCourse = await databases.getDocument<CoursesType>(
+      appwriteConfig.databaseId,
+      appwriteConfig.coursesCollectionId,
+      id
+    );
+
+    return {
+      success: true,
+      message: "Single courses",
+      data: singleCourse,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to get single course",
+      error,
+    };
+  }
+}
+
 export async function addNewCourse(form: CourseSchemaType) {
   const parsedBody = CourseSchema.safeParse(form);
   if (!parsedBody.success) {
@@ -406,6 +434,7 @@ export async function deleteCourse(id: string) {
     };
   }
 }
+
 // Students Actions
 export async function addNewStudent(form: StudentSchemaType) {
   const parsedBody = StudentSchema.safeParse(form);
@@ -479,6 +508,67 @@ export async function addNewStudent(form: StudentSchemaType) {
   }
 }
 
+export async function updateStudent(form: EditStudentSchemaType) {
+  const parsedBody = EditStudentSchema.safeParse(form);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+  const {
+    student_id,
+    name,
+    gender,
+    course_id,
+    current_semester,
+    enrollment_id,
+  } = parsedBody.data;
+  console.log({ student_id });
+
+  try {
+    const { databases } = await createSessionClient();
+
+    const isEnrollmentAlreadyTaken = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.studentsCollectionId,
+      [Query.equal("enrollment_id", enrollment_id)]
+    );
+
+    if (isEnrollmentAlreadyTaken.total > 0) {
+      if (isEnrollmentAlreadyTaken.documents[0].$id != student_id) {
+        return {
+          success: false,
+          message: "Failed to update student",
+          error: "Enrollment Id is already taken",
+        };
+      }
+    }
+
+    const updatedStudent = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.studentsCollectionId,
+      student_id,
+      {
+        name,
+        course: course_id,
+        current_semester: parseInt(current_semester),
+        gender,
+        enrollment_id,
+      }
+    );
+
+    return {
+      success: true,
+      message: "Student updated Successfully",
+      data: updatedStudent,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to update student",
+      error,
+    };
+  }
+}
+
 export async function getAllStudents() {
   try {
     const allStudents = await getAllDocuments<StudentType>(
@@ -494,6 +584,29 @@ export async function getAllStudents() {
     return {
       success: false,
       message: "Failed to get students",
+      error,
+    };
+  }
+}
+
+export async function getStudentById(id: string) {
+  try {
+    const { databases } = await createSessionClient();
+    const singleStudent = await databases.getDocument<StudentType>(
+      appwriteConfig.databaseId,
+      appwriteConfig.studentsCollectionId,
+      id
+    );
+
+    return {
+      success: true,
+      message: "Single student",
+      data: singleStudent,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to get single student",
       error,
     };
   }
@@ -563,6 +676,28 @@ export async function updateStudentFeedbackList(faculty_id: string) {
     return {
       success: false,
       message: "Failed to updated feedback list in students collection",
+      error,
+    };
+  }
+}
+
+export async function deleteStudent(id: string) {
+  try {
+    const { databases } = await createSessionClient();
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.studentsCollectionId,
+      id
+    );
+
+    return {
+      success: true,
+      message: "Student deleted Successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to add student",
       error,
     };
   }

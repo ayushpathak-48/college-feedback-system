@@ -5,14 +5,17 @@
 
 import { toast } from "sonner";
 import { useState } from "react";
-import { FacultyType, GENDER } from "@/types";
+import { CoursesType, GENDER, StudentType } from "@/types";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@/components/LoadingButton";
-import { addNewStudent } from "@/actions/admin.actions";
+import { updateStudent } from "@/actions/admin.actions";
 import { DottedSeparator } from "@/components/DottedSeparator";
-import { StudentSchemaType, StudentSchema } from "@/schema/students.schema";
+import {
+  EditStudentSchema,
+  EditStudentSchemaType,
+} from "@/schema/students.schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
@@ -40,39 +43,45 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { useRouter } from "next/navigation";
 
-const StudentForm = ({ courses }: { courses: FacultyType[] }) => {
+const EditStudentForm = ({
+  student,
+  courses,
+}: {
+  student: StudentType;
+  courses: CoursesType[];
+}) => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<StudentSchemaType>({
-    resolver: zodResolver(StudentSchema),
+  const form = useForm<EditStudentSchemaType>({
+    resolver: zodResolver(EditStudentSchema),
     defaultValues: {
-      course_id: "",
-      current_semester: "",
-      email: "",
-      enrollment_id: "",
-      name: "",
-      gender: "",
+      student_id: student.$id,
+      course_id: student.course.$id,
+      current_semester: student.current_semester.toString(),
+      email: student.email_id,
+      enrollment_id: student.enrollment_id,
+      name: student.name,
+      gender: student.gender,
     },
   });
 
-  const handleSubmit = async (values: StudentSchemaType) => {
+  const handleSubmit = async (values: EditStudentSchemaType) => {
+    console.log({ values });
     setIsLoading(true);
     try {
-      const response = await addNewStudent(values);
+      const response = await updateStudent(values);
       if (response.success) {
-        toast.success(`Student added successfully`);
-        form.setValue("name", "");
-        form.setValue("current_semester", "");
-        form.setValue("email", "");
-        form.setValue("enrollment_id", "");
-        form.setValue("gender", "");
+        toast.success(`Student updated successfully`);
+        router.replace("/students");
       } else {
-        toast.error(`Failed to add student Error: ${response.error}`);
+        toast.error(`Failed to update student Error: ${response.error}`);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to add student");
+      toast.error(`Failed to update student Error: ${error}`);
     }
     setIsLoading(false);
   };
@@ -80,7 +89,7 @@ const StudentForm = ({ courses }: { courses: FacultyType[] }) => {
   return (
     <Card className="w-full h-max md:w-[487px] mx-auto">
       <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Add Student</CardTitle>
+        <CardTitle className="text-2xl">Update Student</CardTitle>
       </CardHeader>
       <DottedSeparator className="px-7 mb-2" />
       <CardContent className="p-7">
@@ -196,6 +205,8 @@ const StudentForm = ({ courses }: { courses: FacultyType[] }) => {
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
+                      readOnly
+                      disabled
                       {...field}
                       type="text"
                       placeholder="Enter student email id"
@@ -277,7 +288,7 @@ const StudentForm = ({ courses }: { courses: FacultyType[] }) => {
               type="submit"
               size="lg"
             >
-              Add Student
+              Update
             </LoadingButton>
           </form>
         </Form>
@@ -286,4 +297,4 @@ const StudentForm = ({ courses }: { courses: FacultyType[] }) => {
   );
 };
 
-export default StudentForm;
+export default EditStudentForm;

@@ -26,6 +26,7 @@ export type StudentType = Models.Document & {
   email_id: string;
   name: string;
   gender: string;
+  current_semester: string;
   course: CoursesType;
   submittedFacultyMemberReviews: FacultyType[];
 };

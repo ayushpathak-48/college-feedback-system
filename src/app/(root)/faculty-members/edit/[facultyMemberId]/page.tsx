@@ -8,7 +8,6 @@ const page = async ({ params }: { params: any }) => {
   const { facultyMemberId } = await params;
   const faculties = (await getAllFaculties()).data?.documents;
   const member = (await getFacultyMemberById(facultyMemberId)).data;
-  console.log({ member });
   if (!member) {
     return redirect("/faculty-members");
   }
