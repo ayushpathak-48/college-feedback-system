@@ -11,7 +11,7 @@ export type FacultyType = Models.Document & {
 };
 
 export type FacultyMemberType = Models.Document & {
-  faculty: string;
+  faculty: FacultyType;
   name: string;
 };
 
@@ -31,7 +31,11 @@ export type StudentType = Models.Document & {
 };
 
 export type FeedbackType = Models.Document & {
-  rating: number;
+  teaching_quality: string;
+  communication_skills: string;
+  subject_knowledge: string;
+  student_engagement: string;
+  punctuality_and_discipline: string;
   comment: string;
   faculty: FacultyType;
 };

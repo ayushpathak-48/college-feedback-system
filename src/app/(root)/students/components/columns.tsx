@@ -13,6 +13,7 @@ export const columns: ColumnDef<StudentType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Enrollment Id
@@ -21,7 +22,7 @@ export const columns: ColumnDef<StudentType>[] = [
       );
     },
     cell: ({ row }) => {
-      return <p className="line-clamp-1">{row.original.enrollment_id}</p>;
+      return <p className="line-clamp-1">{row?.original?.enrollment_id}</p>;
     },
   },
   {
@@ -30,6 +31,7 @@ export const columns: ColumnDef<StudentType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
@@ -38,7 +40,7 @@ export const columns: ColumnDef<StudentType>[] = [
       );
     },
     cell: ({ row }) => {
-      const name = row.original.name;
+      const name = row?.original?.name;
       return (
         <div>
           <span className={cn("truncate")}>{name}</span>
@@ -52,6 +54,7 @@ export const columns: ColumnDef<StudentType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
@@ -60,7 +63,7 @@ export const columns: ColumnDef<StudentType>[] = [
       );
     },
     cell: ({ row }) => {
-      const email_id = row.original.email_id;
+      const email_id = row?.original?.email_id;
       return (
         <div>
           <span className={cn("truncate")}>{email_id}</span>
@@ -74,6 +77,7 @@ export const columns: ColumnDef<StudentType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Gender
@@ -82,7 +86,7 @@ export const columns: ColumnDef<StudentType>[] = [
       );
     },
     cell: ({ row }) => {
-      const gender = row.original.gender;
+      const gender = row?.original?.gender;
       return (
         <div className="flex items-center justify-center">
           <span className={cn("truncate capitalize")}>
@@ -98,6 +102,7 @@ export const columns: ColumnDef<StudentType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Course & Faculty
@@ -106,7 +111,7 @@ export const columns: ColumnDef<StudentType>[] = [
       );
     },
     cell: ({ row }) => {
-      const course = row.original.course;
+      const course = row?.original?.course;
       return (
         <div className="flex flex-col gap-1">
           <span className={cn("truncate text-xs")}>
@@ -126,6 +131,7 @@ export const columns: ColumnDef<StudentType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Sem
@@ -134,7 +140,7 @@ export const columns: ColumnDef<StudentType>[] = [
       );
     },
     cell: ({ row }) => {
-      const current_semester = row.original.current_semester;
+      const current_semester = row?.original?.current_semester;
       return (
         <div className="flex items-center justify-center">
           <span className={cn("truncate")}>{current_semester}</span>

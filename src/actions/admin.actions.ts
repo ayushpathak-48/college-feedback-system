@@ -2,12 +2,25 @@
 "use server";
 
 import { createAdminClient, createSessionClient } from "@/lib/appwrite/client";
-import { FacultySchema, FacultySchemaType } from "@/schema/faculty.schema";
+import {
+  EditFacultySchema,
+  EditFacultySchemaType,
+  FacultySchema,
+  FacultySchemaType,
+} from "@/schema/faculty.schema";
 
 import { ID, Query } from "node-appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
-import { FacultyMemberType, FacultyType, StudentType } from "@/types";
 import {
+  CoursesType,
+  FacultyMemberType,
+  FacultyType,
+  FeedbackType,
+  StudentType,
+} from "@/types";
+import {
+  EditFacultyMembersSchema,
+  EditFacultyMembersSchemaType,
   FacultyMembersSchema,
   FacultyMembersSchemaType,
 } from "@/schema/faculty-members.schema";
@@ -79,7 +92,7 @@ export async function getAllFaculties() {
 export async function getFacultyById(id: string) {
   try {
     const { databases } = await createSessionClient();
-    const singleFaculty = await databases.getDocument(
+    const singleFaculty = await databases.getDocument<FacultyType>(
       appwriteConfig.databaseId,
       appwriteConfig.facultiesCollectionId,
       id
@@ -130,15 +143,86 @@ export async function addNewFaculty(form: FacultySchemaType) {
   }
 }
 
+export async function updateFaculty(form: EditFacultySchemaType) {
+  const parsedBody = EditFacultySchema.safeParse(form);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+
+  const { faculty_id, name } = parsedBody.data;
+
+  try {
+    const { databases } = await createSessionClient();
+    const createdFaculty = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.facultiesCollectionId,
+      faculty_id,
+      {
+        name,
+      }
+    );
+    return {
+      success: true,
+      message: "Faculty added Successfully",
+      data: createdFaculty,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to add faculty",
+      error,
+    };
+  }
+}
+
+export async function deleteFaculty(id: string) {
+  try {
+    const { databases } = await createSessionClient();
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.facultiesCollectionId,
+      id
+    );
+
+    return {
+      success: true,
+      message: "Faculty deleted Successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to add faculty",
+      error,
+    };
+  }
+}
+
 // Faculty Member Actions
+
+export async function getFacultyMemberById(member_id: string = "") {
+  try {
+    const { databases } = await createSessionClient();
+    const singleFaculty = await databases.getDocument<FacultyMemberType>(
+      appwriteConfig.databaseId,
+      appwriteConfig.facultyMembersCollectionId,
+      member_id
+    );
+    return {
+      success: true,
+      message: "All faculty members",
+      data: singleFaculty,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to get faculty members",
+      error,
+    };
+  }
+}
+
 export async function getAllFacultyMembers(faculty_id: string = "") {
   try {
-    // const { databases } = await createSessionClient();
-    // const allFacultyMembers = await databases.listDocuments<FacultyMemberType>(
-    //   appwriteConfig.databaseId,
-    //   appwriteConfig.facultyMembersCollectionId,
-    //   queries
-    // );
     const queries = faculty_id ? [Query.equal("faculty", faculty_id)] : [];
     const allFacultyMembers = await getAllDocuments<FacultyMemberType>(
       appwriteConfig.facultyMembersCollectionId,
@@ -191,10 +275,65 @@ export async function addNewFacultymember(form: FacultyMembersSchemaType) {
   }
 }
 
+export async function updateFacultyMember(form: EditFacultyMembersSchemaType) {
+  const parsedBody = EditFacultyMembersSchema.safeParse(form);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+
+  const { member_id, name, faculty_id } = parsedBody.data;
+
+  try {
+    const { databases } = await createSessionClient();
+    const createdFaculty = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.facultyMembersCollectionId,
+      member_id,
+      {
+        faculty: faculty_id,
+        name,
+      }
+    );
+    return {
+      success: true,
+      message: "Faculty member updated Successfully",
+      data: createdFaculty,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to update faculty member",
+      error,
+    };
+  }
+}
+
+export async function deleteFacultyMember(id: string) {
+  try {
+    const { databases } = await createSessionClient();
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.facultyMembersCollectionId,
+      id
+    );
+
+    return {
+      success: true,
+      message: "Faculty member deleted Successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to add faculty member",
+      error,
+    };
+  }
+}
+
 // Courses Actions
 export async function getAllCourses() {
   try {
-    const allCourses = await getAllDocuments(
+    const allCourses = await getAllDocuments<CoursesType>(
       appwriteConfig.coursesCollectionId
     );
 
@@ -246,6 +385,27 @@ export async function addNewCourse(form: CourseSchemaType) {
   }
 }
 
+export async function deleteCourse(id: string) {
+  try {
+    const { databases } = await createSessionClient();
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.coursesCollectionId,
+      id
+    );
+
+    return {
+      success: true,
+      message: "Course deleted Successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to add course",
+      error,
+    };
+  }
+}
 // Students Actions
 export async function addNewStudent(form: StudentSchemaType) {
   const parsedBody = StudentSchema.safeParse(form);
@@ -495,7 +655,7 @@ export async function deleteFeedback(id: string) {
 
 export async function getAllFeedbacks() {
   try {
-    const allFeedbacks = await getAllDocuments(
+    const allFeedbacks = await getAllDocuments<FeedbackType>(
       appwriteConfig.feedbacksCollectionId
     );
 

@@ -15,14 +15,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  FacultyMembersSchema,
-  FacultyMembersSchemaType,
+  EditFacultyMembersSchema,
+  EditFacultyMembersSchemaType,
 } from "@/schema/faculty-members.schema";
 import { toast } from "sonner";
 import { useState } from "react";
 import { LoadingButton } from "@/components/LoadingButton";
-// import { useRouter } from "next/navigation";
-import { FacultyType } from "@/types";
+import { FacultyMemberType, FacultyType } from "@/types";
 import {
   Select,
   SelectContent,
@@ -30,31 +29,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addNewFacultymember } from "@/actions/admin.actions";
+import { useRouter } from "next/navigation";
+import { updateFacultyMember } from "@/actions/admin.actions";
 
-const FacultyMemberForm = ({ faculties }: { faculties: FacultyType[] }) => {
+const EditFacultyMemberForm = ({
+  member,
+  faculties,
+}: {
+  member: FacultyMemberType;
+  faculties: FacultyType[];
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<FacultyMembersSchemaType>({
-    resolver: zodResolver(FacultyMembersSchema),
+  const router = useRouter();
+  const form = useForm<EditFacultyMembersSchemaType>({
+    resolver: zodResolver(EditFacultyMembersSchema),
     defaultValues: {
-      faculty_id: "",
-      name: "",
+      member_id: member.$id,
+      faculty_id: member.faculty.$id,
+      name: member.name,
     },
   });
 
-  const handleSubmit = async (values: FacultyMembersSchemaType) => {
+  const handleSubmit = async (values: EditFacultyMembersSchemaType) => {
     setIsLoading(true);
     try {
-      const response = await addNewFacultymember(values);
+      const response = await updateFacultyMember(values);
       if (response.success) {
-        toast.success(`Faculty member added successfully`);
-        form.setValue("name", "");
+        toast.success(`Faculty member updated successfully`);
+        router.replace("/faculty-members");
       } else {
-        toast.error(`Failed to add faculty member  Error: ${response.error}`);
+        toast.error(
+          `Failed to update faculty member  Error: ${response.error}`
+        );
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to add faculty member");
+      toast.error("Failed to update faculty member");
     }
     setIsLoading(false);
   };
@@ -62,7 +72,7 @@ const FacultyMemberForm = ({ faculties }: { faculties: FacultyType[] }) => {
   return (
     <Card className="w-full h-max md:w-[487px] mx-auto">
       <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Add Faculty Member</CardTitle>
+        <CardTitle className="text-2xl">Update Faculty Member</CardTitle>
       </CardHeader>
       <DottedSeparator className="px-7 mb-2" />
       <CardContent className="p-7">
@@ -122,7 +132,7 @@ const FacultyMemberForm = ({ faculties }: { faculties: FacultyType[] }) => {
               type="submit"
               size="lg"
             >
-              Add Faculty Member
+              Update
             </LoadingButton>
           </form>
         </Form>
@@ -131,4 +141,4 @@ const FacultyMemberForm = ({ faculties }: { faculties: FacultyType[] }) => {
   );
 };
 
-export default FacultyMemberForm;
+export default EditFacultyMemberForm;

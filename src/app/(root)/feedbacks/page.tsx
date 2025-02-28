@@ -10,12 +10,10 @@ const Page = async () => {
     return redirect("/sign-in");
   }
   if (!account.labels.includes("admin")) return redirect("/");
-  const allFeedbacks = await getAllFeedbacks();
-  console.log({ allFeedbacks });
-
+  const allFeedbacks = (await getAllFeedbacks()).data?.documents;
   return (
     <div>
-      <DataTable columns={columns} data={[]} />
+      <DataTable columns={columns} data={allFeedbacks || []} />
     </div>
   );
 };

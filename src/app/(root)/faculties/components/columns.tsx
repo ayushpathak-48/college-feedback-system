@@ -5,6 +5,7 @@ import { FacultyType } from "@/types";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { FacultyTableActions } from "./faculty-table-actions";
 
 export const columns: ColumnDef<FacultyType>[] = [
   {
@@ -13,6 +14,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Id
@@ -31,6 +33,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
@@ -39,7 +42,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       );
     },
     cell: ({ row }) => {
-      const name = row.original.name;
+      const name = row?.original?.name;
       return (
         <div>
           <span className={cn("truncate")}>{name}</span>
@@ -53,6 +56,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Actions
@@ -60,12 +64,8 @@ export const columns: ColumnDef<FacultyType>[] = [
         </Button>
       );
     },
-    cell: () => {
-      return (
-        <div>
-          <Button variant={"outline"}>Edit</Button>
-        </div>
-      );
+    cell: ({ row }) => {
+      return <FacultyTableActions faculty={row.original} />;
     },
   },
 ];

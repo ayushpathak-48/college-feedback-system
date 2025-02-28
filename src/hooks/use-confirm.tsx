@@ -1,3 +1,5 @@
+"use client";
+
 import { JSX, useState } from "react";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import {
@@ -46,18 +48,18 @@ export const useConfirm = (
             <CardTitle>{title}</CardTitle>
             <CardDescription>{message}</CardDescription>
           </CardHeader>
-          <div className="pt-4 w-full flex flex-col gap-y-2 lg:flex-row gap-x-2 items-center justify-end">
+          <div className="pt-4 w-full flex flex-col lg:!flex-row gap-2 items-center justify-end">
             <Button
               onClick={handleCancel}
               variant={"outline"}
-              className="w-full lg:w-auto"
+              className="w-full lg:w-max"
             >
               Cancel
             </Button>
             <Button
               onClick={handleConfirm}
               variant={variant}
-              className="w-full lg:w-auto"
+              className="w-full lg:w-max"
             >
               Confirm
             </Button>

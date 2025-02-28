@@ -1,18 +1,20 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { FacultyType } from "@/types";
+import { FacultyMemberType } from "@/types";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { FacultyMemberTableActions } from "./faculty-member-table-actions";
 
-export const columns: ColumnDef<FacultyType>[] = [
+export const columns: ColumnDef<FacultyMemberType>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Id
@@ -31,6 +33,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
@@ -39,7 +42,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       );
     },
     cell: ({ row }) => {
-      const name = row.original.name;
+      const name = row?.original?.name;
       return (
         <div>
           <span className={cn("truncate")}>{name}</span>
@@ -53,6 +56,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Faculty
@@ -61,7 +65,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       );
     },
     cell: ({ row }) => {
-      const facultyName = row.original?.faculty?.name;
+      const facultyName = row?.original?.faculty?.name;
       return (
         <div>
           <span className={cn("truncate")}>{facultyName}</span>
@@ -75,6 +79,7 @@ export const columns: ColumnDef<FacultyType>[] = [
       return (
         <Button
           variant="ghost"
+          className="m-0 p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Actions
@@ -82,12 +87,8 @@ export const columns: ColumnDef<FacultyType>[] = [
         </Button>
       );
     },
-    cell: () => {
-      return (
-        <div>
-          <span className={cn("truncate")}>Delete</span>
-        </div>
-      );
+    cell: ({ row }) => {
+      return <FacultyMemberTableActions member={row?.original} />;
     },
   },
 ];
