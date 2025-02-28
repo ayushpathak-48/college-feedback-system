@@ -23,6 +23,7 @@ export const columns: ColumnDef<FacultyType>[] = [
     cell: ({ row }) => {
       return <p className="line-clamp-1">{row.index + 1}</p>;
     },
+    sortingFn: (rowA, rowB) => rowA.index - rowB.index,
   },
   {
     accessorKey: "name",

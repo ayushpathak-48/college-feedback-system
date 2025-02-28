@@ -28,7 +28,11 @@ export async function getAllDocuments<T>(
   const limit = 100;
 
   while (true) {
-    const queries = [Query.limit(limit), ...extraQueries];
+    const queries = [
+      Query.orderDesc("$createdAt"),
+      Query.limit(limit),
+      ...extraQueries,
+    ];
     if (lastDocumentId) {
       queries.push(Query.cursorAfter(lastDocumentId));
     }
