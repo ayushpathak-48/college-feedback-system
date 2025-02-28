@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { StudentType } from "@/types";
 import { Models } from "node-appwrite";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface UserStoreStates {
-  user: Models.User<any> | null;
-  setUser: (value: Models.User<any>) => void;
+  user: (Models.User<any> & { student: StudentType | undefined }) | null;
+  setUser: (
+    value: Models.User<any> & { student: StudentType | undefined }
+  ) => void;
 }
 
 export const useUserStore = create<UserStoreStates>()(

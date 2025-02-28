@@ -17,15 +17,17 @@ export type FacultyMemberType = Models.Document & {
 
 export type CoursesType = Models.Document & {
   name: string;
-  faculty: string;
+  faculty: FacultyType;
   total_semesters: number;
 };
 
 export type StudentType = Models.Document & {
+  enrollment_id: string;
   email_id: string;
   name: string;
-  division: string;
-  stream: string;
+  gender: string;
+  course: CoursesType;
+  submittedFacultyMemberReviews: FacultyType[];
 };
 
 export type FeedbackType = Models.Document & {

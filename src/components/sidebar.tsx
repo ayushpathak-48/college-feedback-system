@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { DottedSeparator } from "./DottedSeparator";
 import { Navigation } from "@/components/navigation";
-// import { WorkspaceSwitcher } from "./workspace-switcher";
 import { APP_TITLE } from "@/lib/constants";
 import { Button } from "./ui/button";
 import { signOutUser } from "@/actions/auth.action";
-// import Projects from "./projects";
 
 export const Sidebar = () => {
   return (

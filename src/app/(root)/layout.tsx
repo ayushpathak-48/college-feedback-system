@@ -9,6 +9,9 @@ const RootLayout = async ({ children }: PropsWithChildren) => {
   if (!account) {
     return redirect("/sign-in");
   }
+
+  console.log({ account });
+
   return (
     <div className="min-h-screen">
       <div className="flex w-full h-full">

@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 
 import { redirect } from "next/navigation";
 import { getAccount } from "@/actions/auth.action";
+import FeedbackForm from "@/components/feedback-form";
 import { getAllFacultyMembers } from "@/actions/admin.actions";
-import { FacultyMemberCard } from "./components/faculty-member-card";
-const Page = async () => {
+const Page = async ({ params }: { params: any }) => {
   const account = await getAccount();
+  const { facultyId } = await params;
   if (!account) {
     return redirect("/sign-in");
   }
@@ -16,9 +18,10 @@ const Page = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {facultyMembers?.map((member) => (
-        <FacultyMemberCard member={member} key={member.$id} />
-      ))}
+      <FeedbackForm
+        facultyMembers={facultyMembers || []}
+        facultyId={facultyId}
+      />
     </div>
   );
 };

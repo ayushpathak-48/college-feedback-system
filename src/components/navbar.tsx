@@ -7,6 +7,8 @@ import { MobileSidebar } from "@/components/mobile-sidebar";
 import { usePathname } from "next/navigation";
 import { Models } from "node-appwrite";
 import { useUserStore } from "@/stores/user.store";
+import Link from "next/link";
+import { APP_TITLE } from "@/lib/constants";
 
 const pathnameMap = {
   feedbacks: {
@@ -44,7 +46,11 @@ const defaultMap = {
   description: "Monitor all your projects and tasks here",
 };
 
-export const Navbar = ({ account }: { account: Models.User<any> }) => {
+export const Navbar = ({
+  account,
+}: {
+  account: Models.User<any> & { student: any };
+}) => {
   const pathname = usePathname();
   const pathnameParts = pathname.split("/");
   const pathnameKey = pathnameParts[1] as keyof typeof pathnameMap;
@@ -57,6 +63,13 @@ export const Navbar = ({ account }: { account: Models.User<any> }) => {
 
   return (
     <nav className="pt-4 px-6 flex items-center justify-between">
+      {/* <Link></Link> */}
+      <Link
+        href={"/"}
+        className="hidden text-xl max-lg:flex items-center justify-center"
+      >
+        {APP_TITLE}
+      </Link>
       <div className="lg:flex flex-col hidden">
         <div className="text-2xl font-semibold">{title}</div>
         <p className="text-muted-foreground">{description}</p>

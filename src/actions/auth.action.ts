@@ -11,6 +11,7 @@ import {
 import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getStudentByEmail } from "./admin.actions";
 
 export async function signInAccount(form: SigninType) {
   const parsedBody = SignInSchema.safeParse(form);
@@ -86,7 +87,18 @@ export async function getAccount() {
   try {
     const { account } = await createSessionClient();
     const currentAccount = await account.get();
-    return currentAccount;
+    const studentAccount = (await getStudentByEmail(currentAccount.email)).data;
+    if (currentAccount.labels.includes("student")) {
+      return {
+        ...currentAccount,
+        student: studentAccount,
+      };
+    }
+
+    return {
+      ...currentAccount,
+      student: null,
+    };
   } catch {
     return null;
   }

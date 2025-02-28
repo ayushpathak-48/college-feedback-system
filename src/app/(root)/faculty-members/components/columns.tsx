@@ -60,7 +60,6 @@ export const columns: ColumnDef<FacultyType>[] = [
       );
     },
     cell: ({ row }) => {
-      console.log(row.original);
       const facultyName = row.original?.faculty?.name;
       return (
         <div>
