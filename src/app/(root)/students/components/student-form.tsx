@@ -5,7 +5,7 @@
 
 import { toast } from "sonner";
 import { useState } from "react";
-import { FacultyType, GENDER } from "@/types";
+import { CoursesType, GENDER } from "@/types";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,7 +41,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-const StudentForm = ({ courses }: { courses: FacultyType[] }) => {
+const StudentForm = ({ courses }: { courses: CoursesType[] }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<StudentSchemaType>({
