@@ -26,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addNewCourse } from "@/actions/admin.actions";
+import { updateCourse } from "@/actions/admin.actions";
 import { useRouter } from "next/navigation";
 
 const EditCourseForm = ({
@@ -51,7 +51,7 @@ const EditCourseForm = ({
   const handleSubmit = async (values: EditCourseSchemaType) => {
     setIsLoading(true);
     try {
-      const response = await addNewCourse(values);
+      const response = await updateCourse(values);
       if (response.success) {
         toast.success(`Course updated successfully`);
         router.replace("/courses");

@@ -4,8 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CoursesType } from "@/types";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, toggleAcceptingFeedback } from "@/lib/utils";
 import { CourseTableActions } from "./course-table-actions";
+import { Switch } from "@/components/ui/switch";
 
 export const columns: ColumnDef<CoursesType>[] = [
   {
@@ -69,6 +70,40 @@ export const columns: ColumnDef<CoursesType>[] = [
       return (
         <div>
           <span className={cn("truncate")}>{facultyName}</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "accepting_feedback",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="m-0 p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Accepting Feedback
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const course = row?.original;
+      return (
+        <div className="flex items-center justify-center w-full">
+          <Switch
+            defaultChecked={course.accepting_feedback}
+            onCheckedChange={async () => {
+              const isToggled = await toggleAcceptingFeedback(
+                "course",
+                course.$id,
+                !course.accepting_feedback
+              );
+              if (!isToggled) {
+              }
+            }}
+          />
         </div>
       );
     },

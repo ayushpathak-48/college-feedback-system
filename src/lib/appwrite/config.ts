@@ -12,4 +12,6 @@ export const appwriteConfig = {
     process.env.NEXT_PUBLIC_APPWRITE_STUDENTS_COLLECTION_ID!,
   feedbacksCollectionId:
     process.env.NEXT_PUBLIC_APPWRITE_FEEDBACKS_COLLECTION_ID!,
+  feedbackSettingsCollectionId:
+    process.env.NEXT_PUBLIC_APPWRITE_FEEDBACK_SETTINGS_COLLECTION_ID!,
 };

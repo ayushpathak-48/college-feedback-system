@@ -8,43 +8,7 @@ import { usePathname } from "next/navigation";
 import { Models } from "node-appwrite";
 import { useUserStore } from "@/stores/user.store";
 import Link from "next/link";
-import { APP_TITLE } from "@/lib/constants";
-
-const pathnameMap = {
-  feedbacks: {
-    title: "Feedbacks",
-    description: "View all feedback list here submitted by students",
-  },
-  faculties: {
-    title: "All Faculties",
-    description: "View and manage faculties list here",
-  },
-  "faculty-members": {
-    title: "All Faculties Members",
-    description: "View and manage faculty members list here",
-  },
-  students: {
-    title: "All Students",
-    description: "View and manage students list here",
-  },
-  courses: {
-    title: "All Courses",
-    description: "View and manage all streams list here",
-  },
-  "submit-feedback": {
-    title: "Submit Feedback",
-    description: "Submit your feedback. It's totally anonymous",
-  },
-  reports: {
-    title: "Reports and Summary",
-    description: "View all the reports based on the feedback",
-  },
-};
-
-const defaultMap = {
-  title: "Home",
-  description: "Monitor all your projects and tasks here",
-};
+import { APP_TITLE, defaultMap, pathnameMap } from "@/lib/constants";
 
 export const Navbar = ({
   account,

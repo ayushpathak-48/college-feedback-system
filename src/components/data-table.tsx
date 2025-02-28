@@ -56,11 +56,9 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter faculties..."
-          value={(table?.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table?.getColumn("name")?.setFilterValue(event.target.value)
-          }
+          placeholder="Search..."
+          value={(table?.getState().globalFilter as string) ?? ""}
+          onChange={(event) => table?.setGlobalFilter(event.target.value)}
           className="max-w-sm"
         />
         {headerButton ? headerButton : <></>}
@@ -124,6 +122,7 @@ export function DataTable<TData, TValue>({
         >
           Previous
         </Button>
+
         <Button
           variant="outline"
           size="sm"

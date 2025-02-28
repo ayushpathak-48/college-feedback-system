@@ -51,6 +51,37 @@ export const columns: ColumnDef<FacultyMemberType>[] = [
     },
   },
   {
+    accessorKey: "totalFeedbacks",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="m-0 p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total Feedbacks
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const totalFeedbacks = row?.original?.totalFeedbacks;
+      return (
+        <div>
+          <span className={cn("truncate")}>
+            {totalFeedbacks == 0 ? (
+              <span className="text-gray-400">No Feedbacks</span>
+            ) : (
+              <Button variant={"outline"}>
+                {totalFeedbacks} feedback{totalFeedbacks > 1 ? "s" : ""}
+              </Button>
+            )}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "faculty",
     header: ({ column }) => {
       return (

@@ -24,7 +24,12 @@ import {
   FacultyMembersSchema,
   FacultyMembersSchemaType,
 } from "@/schema/faculty-members.schema";
-import { CourseSchema, CourseSchemaType } from "@/schema/course.schema";
+import {
+  CourseSchema,
+  CourseSchemaType,
+  EditCourseSchema,
+  EditCourseSchemaType,
+} from "@/schema/course.schema";
 import {
   EditStudentSchema,
   EditStudentSchemaType,
@@ -233,10 +238,26 @@ export async function getAllFacultyMembers(faculty_id: string = "") {
       appwriteConfig.facultyMembersCollectionId,
       queries
     );
+
+    const data = await Promise.all(
+      allFacultyMembers.documents.map(async (member) => {
+        const totalFeedbacks = (
+          await getAllDocuments<FeedbackType>(
+            appwriteConfig.feedbacksCollectionId,
+            [Query.equal("faculty", member.$id)]
+          )
+        ).total;
+        return {
+          ...member,
+          totalFeedbacks,
+        };
+      })
+    );
+
     return {
       success: true,
       message: "All faculty members",
-      data: allFacultyMembers,
+      data: { documents: data, total: allFacultyMembers.total },
     };
   } catch (error) {
     return {
@@ -408,6 +429,40 @@ export async function addNewCourse(form: CourseSchemaType) {
     return {
       success: false,
       message: "Failed to add course",
+      error,
+    };
+  }
+}
+
+export async function updateCourse(form: EditCourseSchemaType) {
+  const parsedBody = EditCourseSchema.safeParse(form);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+
+  const { name, faculty_id, course_id, total_semesters } = parsedBody.data;
+
+  try {
+    const { databases } = await createSessionClient();
+    const createdFaculty = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.coursesCollectionId,
+      course_id,
+      {
+        faculty: faculty_id,
+        name,
+        total_semesters,
+      }
+    );
+    return {
+      success: true,
+      message: "Faculty member updated Successfully",
+      data: createdFaculty,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to update faculty member",
       error,
     };
   }
@@ -803,6 +858,36 @@ export async function getAllFeedbacks() {
     return {
       success: false,
       message: "Failed to get feedbacks",
+      error,
+    };
+  }
+}
+
+export async function toggleFeedback(
+  collectionId: string,
+  documentId: string,
+  value: boolean
+) {
+  try {
+    const { databases } = await createSessionClient();
+    const toggled = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      collectionId,
+      documentId,
+      {
+        accepting_feedback: value,
+      }
+    );
+
+    return {
+      success: true,
+      message: "Feedback toggled Successfully",
+      data: toggled,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to toggle feedback",
       error,
     };
   }

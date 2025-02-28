@@ -8,6 +8,7 @@ export enum GENDER {
 
 export type FacultyType = Models.Document & {
   name: string;
+  totalFeedbacks: number;
 };
 
 export type FacultyMemberType = Models.Document & {
@@ -19,6 +20,7 @@ export type CoursesType = Models.Document & {
   name: string;
   faculty: FacultyType;
   total_semesters: number;
+  accepting_feedback: boolean;
 };
 
 export type StudentType = Models.Document & {
@@ -40,3 +42,5 @@ export type FeedbackType = Models.Document & {
   comment: string;
   faculty: FacultyType;
 };
+
+export type ToggleFeedbackTypes = "course" | "faculty";
