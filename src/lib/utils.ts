@@ -1,5 +1,5 @@
 import { toggleFeedback } from "@/actions/admin.actions";
-import { ToggleFeedbackTypes } from "@/types";
+import { FeedbackType, ToggleFeedbackTypes } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
@@ -29,3 +29,17 @@ export async function toggleAcceptingFeedback(
   }
   return isToggled.success;
 }
+
+export const getAverageFeedbackStars = (
+  feedbacks: FeedbackType[],
+  star_key: string
+) => {
+  const totalStars = feedbacks.reduce(
+    (sum, feedback) => sum + parseInt(feedback[star_key]),
+    0
+  );
+
+  const result = totalStars / feedbacks.length;
+
+  return result.toFixed(2).toString();
+};

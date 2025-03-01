@@ -9,6 +9,7 @@ import { Models } from "node-appwrite";
 import { useUserStore } from "@/stores/user.store";
 import Link from "next/link";
 import { APP_TITLE, defaultMap, pathnameMap } from "@/lib/constants";
+import { UserButton } from "./user-button";
 
 export const Navbar = ({
   account,
@@ -26,19 +27,6 @@ export const Navbar = ({
     setUser(account);
   }, [account, setUser]);
 
-  // useLayoutEffect(() => {
-  //   const activeRoute = routes.find(
-  //     (route) => `/${pathnameParts[1]}` == route.href
-  //   );
-  //   if (activeRoute?.accessible) {
-  //     if (
-  //       !activeRoute.accessible.some((value) => account.labels.includes(value))
-  //     ) {
-  //       router.replace("/");
-  //     }
-  //   }
-  // }, [pathnameParts, account]);
-
   return (
     <nav className="pt-4 px-6 flex items-center justify-between">
       <Link
@@ -52,7 +40,7 @@ export const Navbar = ({
         <p className="text-muted-foreground">{description}</p>
       </div>
       <MobileSidebar />
-      {/* <UserButton /> */}
+      <UserButton />
     </nav>
   );
 };
