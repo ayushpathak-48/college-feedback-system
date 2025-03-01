@@ -2,19 +2,12 @@ import React, { PropsWithChildren } from "react";
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import { getAccount } from "@/actions/auth.action";
-import { redirect } from "next/navigation";
-import { headers } from "next/headers";
+import CheckAuthClient from "@/components/check-auth-client";
 
 const RootLayout = async ({ children }: PropsWithChildren) => {
   const account = await getAccount();
   if (!account) {
-    const headersList = await headers();
-    const pathname = headersList.get("x-next-path") || "/";
-    if (pathname && pathname != "/") {
-      return redirect("/");
-    } else {
-      return redirect("/sign-in");
-    }
+    return <CheckAuthClient />;
   }
   return (
     <div className="min-h-screen">

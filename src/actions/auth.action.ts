@@ -97,7 +97,7 @@ export async function getAccount() {
 
     return {
       ...currentAccount,
-      student: null,
+      student: undefined,
     };
   } catch {
     return null;
