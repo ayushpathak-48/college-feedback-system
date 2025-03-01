@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const SignInPage = async () => {
   const account = await getAccount();
   if (account) {
-    redirect("/");
+    return redirect("/");
   }
   return <SignInCard />;
 };
