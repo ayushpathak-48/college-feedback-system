@@ -3,16 +3,18 @@ import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import { getAccount } from "@/actions/auth.action";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 
 const RootLayout = async ({ children }: PropsWithChildren) => {
   const account = await getAccount();
   if (!account) {
-    const cookie = await cookies();
-    const session = cookie.get(
-      process.env.NEXT_PUBLIC_APP_SESSION_COOKIE_NAME!
-    );
-    if (session && session.value) {
+    // const cookie = await cookies();
+    // const session = cookie.get(
+    //   process.env.NEXT_PUBLIC_APP_SESSION_COOKIE_NAME!
+    // );
+    const headersList = await headers();
+    const pathname = headersList.get("x-next-path") || "/";
+    if (pathname && pathname != "/") {
       return redirect("/");
     } else {
       return redirect("/sign-in");
