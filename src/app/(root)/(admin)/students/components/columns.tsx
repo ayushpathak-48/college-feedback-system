@@ -98,6 +98,64 @@ export const columns: ColumnDef<StudentType>[] = [
     },
   },
   {
+    accessorKey: "totalFeedbacks",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="m-0 p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total Feedbacks
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const totalFeedbacksSubmitted =
+        row?.original?.submittedFacultyMemberReviews.length;
+      return (
+        <div>
+          <span className={cn("truncate")}>
+            <Button
+              variant={"ghost"}
+              className={cn(
+                "text-lg",
+                totalFeedbacksSubmitted == 0 ? "text-red-400" : "text-green-600"
+              )}
+            >
+              {totalFeedbacksSubmitted}
+            </Button>
+          </span>
+        </div>
+      );
+    },
+  },
+
+  {
+    accessorKey: "current_semester",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="m-0 p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Sem
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const current_semester = row?.original?.current_semester;
+      return (
+        <div className="flex items-center justify-center">
+          <span className={cn("truncate")}>{current_semester}</span>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "course",
     header: ({ column }) => {
       return (
@@ -122,29 +180,6 @@ export const columns: ColumnDef<StudentType>[] = [
           <span className={cn("truncate text-xs")}>
             <span className="font-semibold">Course</span>: {course?.name}
           </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "current_semester",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="m-0 p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Sem
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const current_semester = row?.original?.current_semester;
-      return (
-        <div className="flex items-center justify-center">
-          <span className={cn("truncate")}>{current_semester}</span>
         </div>
       );
     },

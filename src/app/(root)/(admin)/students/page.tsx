@@ -6,7 +6,6 @@ import Link from "next/link";
 import { getAllStudents } from "@/actions/admin.actions";
 const Page = async () => {
   const data = (await getAllStudents()).data?.documents;
-
   return (
     <div>
       <DataTable

@@ -39,8 +39,10 @@ export const Navbar = ({
         <div className="text-2xl font-semibold">{title}</div>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      <MobileSidebar />
-      <UserButton />
+      <div className="flex items-center gap-2">
+        <UserButton />
+        <MobileSidebar />
+      </div>
     </nav>
   );
 };
