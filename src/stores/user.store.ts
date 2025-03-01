@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { StudentType } from "@/types";
 import { Models } from "node-appwrite";
 import { create } from "zustand";

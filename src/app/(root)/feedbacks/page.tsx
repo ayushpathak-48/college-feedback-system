@@ -13,7 +13,11 @@ const Page = async () => {
   const allFeedbacks = (await getAllFeedbacks()).data?.documents;
   return (
     <div>
-      <DataTable columns={columns} data={allFeedbacks || []} />
+      <DataTable
+        columns={columns}
+        data={allFeedbacks || []}
+        showFeedbackFilters
+      />
     </div>
   );
 };

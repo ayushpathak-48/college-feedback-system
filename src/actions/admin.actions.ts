@@ -576,7 +576,6 @@ export async function updateStudent(form: EditStudentSchemaType) {
     current_semester,
     enrollment_id,
   } = parsedBody.data;
-  console.log({ student_id });
 
   try {
     const { databases } = await createSessionClient();

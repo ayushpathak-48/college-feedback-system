@@ -3,6 +3,7 @@ import { Lexend_Deca } from "next/font/google";
 import "./globals.css";
 import { APP_TITLE } from "@/lib/constants";
 import { Toaster } from "@/components/ui/sonner";
+import { NuqsAdapter } from "nuqs/adapters/react";
 
 const lexendDeca = Lexend_Deca({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lexendDeca.className} antialiased`}>
-        {children}
+        <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
       </body>
     </html>

@@ -117,10 +117,10 @@ export const columns: ColumnDef<StudentType>[] = [
         <div className="flex flex-col gap-1">
           <span className={cn("truncate text-xs")}>
             <span className="font-semibold">Faculty</span>:{" "}
-            {course.faculty.name}
+            {course?.faculty?.name}
           </span>
           <span className={cn("truncate text-xs")}>
-            <span className="font-semibold">Course</span>: {course.name}
+            <span className="font-semibold">Course</span>: {course?.name}
           </span>
         </div>
       );
