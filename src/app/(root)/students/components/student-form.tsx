@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-
 "use client";
 
 import { toast } from "sonner";
@@ -60,7 +59,8 @@ const StudentForm = ({ courses }: { courses: CoursesType[] }) => {
     setIsLoading(true);
     try {
       const response = await addNewStudent(values);
-      if (response.success) {
+      console.log({ response });
+      if (response?.success) {
         toast.success(`Student added successfully`);
         form.setValue("name", "");
         form.setValue("current_semester", "");
@@ -68,7 +68,7 @@ const StudentForm = ({ courses }: { courses: CoursesType[] }) => {
         form.setValue("enrollment_id", "");
         form.setValue("gender", "");
       } else {
-        toast.error(`Failed to add student Error: ${response.error}`);
+        toast.error(`Failed to add student Error: ${response?.error}`);
       }
     } catch (error) {
       console.log(error);

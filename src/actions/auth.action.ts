@@ -51,9 +51,8 @@ export async function signUpAccount(form: SignupType) {
   }
 
   const user = parsedBody.data;
-  const { account } = await createAdminClient();
-
   try {
+    const { account } = await createAdminClient();
     const newAccount = await account.create(
       ID.unique(),
       user.email,

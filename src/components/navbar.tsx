@@ -16,6 +16,7 @@ export const Navbar = ({
   account: Models.User<any> & { student: any };
 }) => {
   const pathname = usePathname();
+  // const router = useRouter();
   const pathnameParts = pathname.split("/");
   const pathnameKey = pathnameParts[1] as keyof typeof pathnameMap;
   const { title, description } = pathnameMap[pathnameKey] || defaultMap;
@@ -25,9 +26,21 @@ export const Navbar = ({
     setUser(account);
   }, [account, setUser]);
 
+  // useLayoutEffect(() => {
+  //   const activeRoute = routes.find(
+  //     (route) => `/${pathnameParts[1]}` == route.href
+  //   );
+  //   if (activeRoute?.accessible) {
+  //     if (
+  //       !activeRoute.accessible.some((value) => account.labels.includes(value))
+  //     ) {
+  //       router.replace("/");
+  //     }
+  //   }
+  // }, [pathnameParts, account]);
+
   return (
     <nav className="pt-4 px-6 flex items-center justify-between">
-      {/* <Link></Link> */}
       <Link
         href={"/"}
         className="hidden text-xl max-lg:flex items-center justify-center"

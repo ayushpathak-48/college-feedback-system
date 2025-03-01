@@ -52,11 +52,11 @@ const EditCourseForm = ({
     setIsLoading(true);
     try {
       const response = await updateCourse(values);
-      if (response.success) {
+      if (response?.success) {
         toast.success(`Course updated successfully`);
         router.replace("/courses");
       } else {
-        toast.error(`Failed to update course  Error: ${response.error}`);
+        toast.error(`Failed to update course  Error: ${response?.error}`);
       }
     } catch (error) {
       console.log(error);

@@ -451,7 +451,7 @@ export async function updateCourse(form: EditCourseSchemaType) {
       {
         faculty: faculty_id,
         name,
-        total_semesters,
+        total_semesters: parseInt(total_semesters),
       }
     );
     return {
@@ -493,30 +493,40 @@ export async function deleteCourse(id: string) {
 // Students Actions
 export async function addNewStudent(form: StudentSchemaType) {
   const parsedBody = StudentSchema.safeParse(form);
+  console.log({ parsedBody });
   if (!parsedBody.success) {
     throw new Error(parsedBody.error.message);
   }
 
-  const studentAccount = await signUpAccount({
+  const studentAccount: any = await signUpAccount({
     name: form.name,
     email: form.email,
     password: defaultStudentPassword,
   });
 
-  if (!studentAccount.success || !studentAccount.data) {
+  if (!studentAccount?.success || !studentAccount?.data) {
     return {
       success: false,
       message: "Failed to add student",
-      error: studentAccount.error,
+      error: studentAccount?.error?.message || "Failed to sign up",
     };
   }
 
-  const { users } = await createAdminClient();
-  await users.updateLabels(studentAccount.data.$id, ["student"]);
+  const isLabelUpdated = await updateUserLabels(studentAccount.data.$id, [
+    "student",
+  ]);
+
+  if (!isLabelUpdated) {
+    await deleteAccount(studentAccount.data.$id);
+    return {
+      success: false,
+      message: "Label not updated",
+      error: "Failed to add label for student",
+    };
+  }
 
   const { name, gender, course_id, current_semester, email, enrollment_id } =
     parsedBody.data;
-
   try {
     const { databases } = await createSessionClient();
 
@@ -560,6 +570,17 @@ export async function addNewStudent(form: StudentSchemaType) {
       message: "Failed to add student",
       error,
     };
+  }
+}
+
+export async function updateUserLabels(accountId: string, labels: string[]) {
+  try {
+    const { users } = await createAdminClient();
+    await users.updateLabels(accountId, labels);
+    return true;
+  } catch (error) {
+    console.log({ error });
+    return false;
   }
 }
 
