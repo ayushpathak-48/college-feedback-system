@@ -713,34 +713,35 @@ export async function updateStudentFeedbackList(faculty_id: string) {
   try {
     const { databases } = await createSessionClient();
     const account = await getAccount();
-
-    if (!account || !account.student) {
+    console.log({ account });
+    if (!account || !account?.student) {
       return {
         success: false,
-        message: "You are not authorized for this action",
+        error: "You are not authorized to submit feedback",
       };
-    }
-    const alreadySubmitted =
-      account.student?.submittedFacultyMemberReviews?.find(
-        ({ $id }) => $id == faculty_id
-      );
-
-    if (alreadySubmitted && alreadySubmitted.$id) {
-      return { success: false, alreadySubmitted: true };
     }
 
     const submittedFacultyMemberReveiewIds =
       account.student?.submittedFacultyMemberReviews?.map(({ $id }) => $id);
 
+    const isAlreadySubmitted =
+      submittedFacultyMemberReveiewIds?.includes(faculty_id);
+
+    if (isAlreadySubmitted) {
+      return {
+        success: false,
+        alreadySubmitted: true,
+        error: "Already submitted",
+      };
+    }
+
+    const data = [faculty_id, ...submittedFacultyMemberReveiewIds!];
     await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.studentsCollectionId,
       account.student.$id!,
       {
-        submittedFacultyMemberReviews: [
-          faculty_id,
-          ...submittedFacultyMemberReveiewIds!,
-        ],
+        submittedFacultyMemberReviews: data,
       }
     );
     return {
@@ -748,7 +749,6 @@ export async function updateStudentFeedbackList(faculty_id: string) {
       message: "Updated feedback list in students collection",
     };
   } catch (error) {
-    console.log({ error });
     return {
       success: false,
       message: "Failed to updated feedback list in students collection",
@@ -798,8 +798,6 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
     teaching_quality,
   } = parsedBody.data;
 
-  console.log("parsedBody.data", parsedBody.data);
-
   try {
     const { databases } = await createSessionClient();
     const createdFeedback = await databases.createDocument(
@@ -820,7 +818,7 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
     const updatedStudentFeedbackList = await updateStudentFeedbackList(
       faculty_id
     );
-
+    console.log({ updatedStudentFeedbackList });
     if (!updatedStudentFeedbackList.success) {
       if (updatedStudentFeedbackList?.alreadySubmitted) {
         return {
