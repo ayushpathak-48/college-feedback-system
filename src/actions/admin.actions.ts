@@ -876,10 +876,11 @@ export async function deleteFeedback(id: string) {
   }
 }
 
-export async function getAllFeedbacks() {
+export async function getAllFeedbacks(queries: string[] = []) {
   try {
     const allFeedbacks = await getAllDocuments<FeedbackType>(
-      appwriteConfig.feedbacksCollectionId
+      appwriteConfig.feedbacksCollectionId,
+      queries
     );
 
     return {

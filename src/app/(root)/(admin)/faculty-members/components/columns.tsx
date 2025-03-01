@@ -6,6 +6,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FacultyMemberTableActions } from "./faculty-member-table-actions";
+import Link from "next/link";
 
 export const columns: ColumnDef<FacultyMemberType>[] = [
   {
@@ -72,8 +73,10 @@ export const columns: ColumnDef<FacultyMemberType>[] = [
             {totalFeedbacks == 0 ? (
               <span className="text-gray-400">No Feedbacks</span>
             ) : (
-              <Button variant={"outline"}>
-                {totalFeedbacks} feedback{totalFeedbacks > 1 ? "s" : ""}
+              <Button variant={"outline"} asChild>
+                <Link href={`/faculty-members/feedbacks/${row.original.$id}`}>
+                  {totalFeedbacks} feedback{totalFeedbacks > 1 ? "s" : ""}
+                </Link>
               </Button>
             )}
           </span>
