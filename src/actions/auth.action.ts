@@ -90,7 +90,7 @@ export async function getAccount() {
     if (currentAccount.labels.includes("student")) {
       return {
         ...currentAccount,
-        student: studentAccount,
+        student: { ...studentAccount, accountId: currentAccount.$id },
       };
     }
 

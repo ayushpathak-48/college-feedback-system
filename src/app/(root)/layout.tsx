@@ -3,27 +3,12 @@ import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import { getAccount } from "@/actions/auth.action";
 import CheckAuthClient from "@/components/check-auth-client";
-// import { headers } from "next/headers";
-// import { routes } from "@/lib/constants";
-// import { redirect } from "next/navigation";
 
 const RootLayout = async ({ children }: PropsWithChildren) => {
   const account = await getAccount();
   if (!account) {
     return <CheckAuthClient />;
   }
-  // const headerList = await headers();
-  // const pathname = headerList.get("x-current-path");
-  // const activeRoute = routes.find((route) =>
-  //   pathname?.split("/")?.some((path) => route.href.includes(path))
-  // );
-  // if (activeRoute?.accessible) {
-  //   if (
-  //     !activeRoute.accessible.some((value) => account.labels.includes(value))
-  //   ) {
-  //     return redirect("/");
-  //   }
-  // }
 
   return (
     <>

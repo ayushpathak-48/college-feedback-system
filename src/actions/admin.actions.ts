@@ -556,6 +556,7 @@ export async function addNewStudent(form: StudentSchemaType) {
         email_id: email,
         gender,
         enrollment_id,
+        accountId: studentAccount.$id,
       }
     );
     return {
@@ -720,25 +721,26 @@ export async function updateStudentFeedbackList(faculty_id: string) {
         message: "You are not authorized for this action",
       };
     }
-    const alreadySubmitted = account.student.submittedFacultyMemberReviews.find(
-      ({ $id }) => $id == faculty_id
-    );
+    const alreadySubmitted =
+      account.student?.submittedFacultyMemberReviews?.find(
+        ({ $id }) => $id == faculty_id
+      );
 
     if (alreadySubmitted && alreadySubmitted.$id) {
       return redirect("/submit-feedback");
     }
 
     const submittedFacultyMemberReveiewIds =
-      account.student.submittedFacultyMemberReviews.map(({ $id }) => $id);
+      account.student?.submittedFacultyMemberReviews?.map(({ $id }) => $id);
 
     await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.studentsCollectionId,
-      account.student.$id,
+      account.student.$id!,
       {
         submittedFacultyMemberReviews: [
           faculty_id,
-          ...submittedFacultyMemberReveiewIds,
+          ...submittedFacultyMemberReveiewIds!,
         ],
       }
     );
@@ -756,15 +758,16 @@ export async function updateStudentFeedbackList(faculty_id: string) {
   }
 }
 
-export async function deleteStudent(id: string) {
+export async function deleteStudent(documentId: string, accountId: string) {
   try {
     const { databases } = await createSessionClient();
     await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.studentsCollectionId,
-      id
+      documentId
     );
 
+    await deleteAccount(accountId);
     return {
       success: true,
       message: "Student deleted Successfully",

@@ -4,14 +4,15 @@ import { deleteStudent } from "@/actions/admin.actions";
 import { Button } from "@/components/ui/button";
 import { useConfirm } from "@/hooks/use-confirm";
 import { StudentType } from "@/types";
-import { PencilIcon, TrashIcon } from "lucide-react";
+import { LoaderIcon, PencilIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 export const StudentTableActions = ({ student }: { student: StudentType }) => {
   const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
   const [ConfirmDialog, confirm] = useConfirm(
     `Delete ${student.name}`,
     "This student will be removed permanently",
@@ -21,12 +22,14 @@ export const StudentTableActions = ({ student }: { student: StudentType }) => {
   const handleDeleteStudent = async () => {
     const ok = await confirm();
     if (!ok) return;
+    setIsDeleting(true);
     const loadingToast = toast.loading(
       "Please wait while deleting the student..."
     );
 
     try {
-      const response = await deleteStudent(student.$id);
+      console.log({ student });
+      const response = await deleteStudent(student.$id, student.accountId);
       toast.dismiss(loadingToast);
       if (response.success) {
         toast.success("Student deleted successfully");
@@ -39,6 +42,7 @@ export const StudentTableActions = ({ student }: { student: StudentType }) => {
       toast.dismiss(loadingToast);
       toast.error(`Failed to delete student! Error:${error}`);
     }
+    setIsDeleting(false);
   };
 
   return (
@@ -53,8 +57,17 @@ export const StudentTableActions = ({ student }: { student: StudentType }) => {
         onClick={handleDeleteStudent}
         variant={"outline"}
         className="text-red-500 border-red-200 hover:text-red-400"
+        disabled={isDeleting}
       >
-        Delete <TrashIcon />
+        {isDeleting ? (
+          <>
+            <LoaderIcon className="animate-spin" /> Deleting...{" "}
+          </>
+        ) : (
+          <>
+            Delete <TrashIcon />
+          </>
+        )}
       </Button>
     </div>
   );

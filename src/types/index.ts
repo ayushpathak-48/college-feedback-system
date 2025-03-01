@@ -31,6 +31,7 @@ export type StudentType = Models.Document & {
   current_semester: string;
   course: CoursesType;
   submittedFacultyMemberReviews: FacultyType[];
+  accountId: string;
 };
 
 export type FeedbackType = Models.Document & {
