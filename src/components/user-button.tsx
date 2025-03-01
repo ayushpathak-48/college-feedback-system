@@ -11,8 +11,11 @@ import {
 import { DottedSeparator } from "@/components/DottedSeparator";
 import { Loader, LogOutIcon } from "lucide-react";
 import { signOutUser } from "@/actions/auth.action";
+import { useUserStore } from "@/stores/user.store";
 
 export const UserButton = () => {
+  const user = useUserStore((state) => state.user);
+  const { name, email } = user || { name: "user", email: "email@guest.com" };
   const isLoading = false;
 
   if (isLoading) {
@@ -22,8 +25,6 @@ export const UserButton = () => {
       </div>
     );
   }
-
-  const { name, email } = { name: "Aayush", email: "ayush010pathak@gmail.com" };
 
   const avatarFallback = name
     ? name.charAt(0).toUpperCase()
@@ -38,7 +39,7 @@ export const UserButton = () => {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="mr-5 min-w-[200px]">
         <div className="flex flex-col items-center justify-center gap-2 px-2.5 py-4">
           <Avatar className="size-[52px] hover:opacity-75 transition border border-neutral-300">
             <AvatarFallback className="bg-neutral-200 text-xl font-medium text-neutral-500 flex items-center justify-center">
