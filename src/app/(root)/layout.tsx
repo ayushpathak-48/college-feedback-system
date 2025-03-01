@@ -3,13 +3,21 @@ import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import { getAccount } from "@/actions/auth.action";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 const RootLayout = async ({ children }: PropsWithChildren) => {
   const account = await getAccount();
   if (!account) {
-    return redirect("/sign-in");
+    const cookie = await cookies();
+    const session = cookie.get(
+      process.env.NEXT_PUBLIC_APP_SESSION_COOKIE_NAME!
+    );
+    if (session && session.value) {
+      return redirect("/");
+    } else {
+      return redirect("/sign-in");
+    }
   }
-
   return (
     <div className="min-h-screen">
       <div className="flex w-full h-full">
