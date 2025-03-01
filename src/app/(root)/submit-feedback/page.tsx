@@ -10,7 +10,7 @@ const Page = async () => {
   if (!account) {
     return redirect("/sign-in");
   }
-  const isAcceptingFeedback = account.student?.course.accepting_feedback;
+  const isAcceptingFeedback = account?.student?.course?.accepting_feedback;
   const facultyMembers = isAcceptingFeedback
     ? (await getAllFacultyMembers(account?.student?.course?.faculty?.$id)).data
         ?.documents
