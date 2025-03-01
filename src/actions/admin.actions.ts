@@ -39,7 +39,6 @@ import {
 import { deleteAccount, getAccount, signUpAccount } from "./auth.action";
 import { defaultStudentPassword } from "@/lib/constants";
 import { FeedbackSchema, FeedbackSchemaType } from "@/schema/feedback.schema";
-import { redirect } from "next/navigation";
 
 // Get All Documents Common Function
 export async function getAllDocuments<T>(
@@ -727,7 +726,7 @@ export async function updateStudentFeedbackList(faculty_id: string) {
       );
 
     if (alreadySubmitted && alreadySubmitted.$id) {
-      return redirect("/submit-feedback");
+      return { success: false, alreadySubmitted: true };
     }
 
     const submittedFacultyMemberReveiewIds =
@@ -799,6 +798,8 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
     teaching_quality,
   } = parsedBody.data;
 
+  console.log("parsedBody.data", parsedBody.data);
+
   try {
     const { databases } = await createSessionClient();
     const createdFeedback = await databases.createDocument(
@@ -821,6 +822,15 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
     );
 
     if (!updatedStudentFeedbackList.success) {
+      if (updatedStudentFeedbackList?.alreadySubmitted) {
+        return {
+          success: false,
+          message: "Feedback Already submitted",
+          error: "Feedback Already submitted for the faculty",
+          isAlreadySubmitted: true,
+        };
+      }
+
       await deleteFeedback(createdFeedback.$id);
       return {
         success: false,

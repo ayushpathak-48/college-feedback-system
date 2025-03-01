@@ -41,7 +41,7 @@ export type FeedbackType = Models.Document & {
   student_engagement: string;
   punctuality_and_discipline: string;
   comment: string;
-  faculty: FacultyType;
+  faculty: FacultyMemberType;
 };
 
 export type ToggleFeedbackTypes = "course" | "faculty";

@@ -56,6 +56,7 @@ export const routes = [
     href: "/",
     icon: HomeIcon,
     activeIcon: HomeIcon,
+    accessible: ["admin"],
   },
   {
     label: "Feedbacks",

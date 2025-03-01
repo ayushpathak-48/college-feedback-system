@@ -28,14 +28,14 @@ export const columns: ColumnDef<FeedbackType>[] = [
     sortingFn: (rowA, rowB) => rowA.index - rowB.index,
   },
   {
-    accessorKey: "name",
+    accessorKey: "faculty_member_name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Faculty
+          Faculty Member
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -44,11 +44,12 @@ export const columns: ColumnDef<FeedbackType>[] = [
       const faculty = row.original.faculty;
       return (
         <div>
-          <span className={cn("truncate")}>{faculty.name}</span>
+          <span className={cn("truncate")}>{faculty?.name}</span>
         </div>
       );
     },
   },
+
   {
     accessorKey: "comment",
     header: ({ column }) => {
@@ -243,7 +244,28 @@ export const columns: ColumnDef<FeedbackType>[] = [
       );
     },
   },
-
+  {
+    accessorKey: "faculty_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Faculty
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const faculty = row.original.faculty;
+      return (
+        <div>
+          <span className={cn("truncate")}>{faculty?.faculty?.name}</span>
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "createdAt",
     header: ({ column }) => {

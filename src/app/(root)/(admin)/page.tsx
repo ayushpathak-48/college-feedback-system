@@ -7,6 +7,9 @@ const page = async () => {
   if (!account) {
     return redirect("/sign-in");
   }
+
+  if (!account.labels.includes("admin")) return redirect("/submit-feedback");
+
   return <div>page</div>;
 };
 

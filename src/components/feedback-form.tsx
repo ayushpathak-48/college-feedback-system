@@ -64,6 +64,9 @@ const FeedbackForm = ({
         router.replace("/submit-feedback");
       } else {
         toast.error(`Failed to submit feedback! Error: ${response.error}`);
+        if (response.isAlreadySubmitted) {
+          router.replace("/submit-feedback");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -118,14 +121,17 @@ const FeedbackForm = ({
                         <div key={item}>
                           <FormLabel
                             onClick={() => {
-                              form.setValue("teaching_quality", i.toString());
+                              form.setValue(
+                                "teaching_quality",
+                                (i + 1).toString()
+                              );
                               form.clearErrors("teaching_quality");
                             }}
                           >
                             <StarIcon
                               className={cn(
                                 "cursor-pointer fill-transparent stroke-gray-400",
-                                parseInt(form.getValues().teaching_quality) >=
+                                parseInt(form.getValues().teaching_quality) >
                                   i && "fill-yellow-500 stroke-yellow-500",
                                 form.control._formState.errors
                                   .teaching_quality && "stroke-red-400"
@@ -168,7 +174,7 @@ const FeedbackForm = ({
                             onClick={() => {
                               form.setValue(
                                 "communication_skills",
-                                i.toString()
+                                (i + 1).toString()
                               );
                               form.clearErrors("communication_skills");
                             }}
@@ -178,7 +184,7 @@ const FeedbackForm = ({
                                 "cursor-pointer fill-transparent stroke-gray-400",
                                 parseInt(
                                   form.getValues().communication_skills
-                                ) >= i && "fill-yellow-500 stroke-yellow-500",
+                                ) > i && "fill-yellow-500 stroke-yellow-500",
                                 form.control._formState.errors
                                   .communication_skills && "stroke-red-400"
                               )}
@@ -218,14 +224,17 @@ const FeedbackForm = ({
                         <div key={item}>
                           <FormLabel
                             onClick={() => {
-                              form.setValue("subject_knowledge", i.toString());
+                              form.setValue(
+                                "subject_knowledge",
+                                (i + 1).toString()
+                              );
                               form.clearErrors("subject_knowledge");
                             }}
                           >
                             <StarIcon
                               className={cn(
                                 "cursor-pointer fill-transparent stroke-gray-400",
-                                parseInt(form.getValues().subject_knowledge) >=
+                                parseInt(form.getValues().subject_knowledge) >
                                   i && "fill-yellow-500 stroke-yellow-500",
                                 form.control._formState.errors
                                   .subject_knowledge && "stroke-red-400"
@@ -266,14 +275,17 @@ const FeedbackForm = ({
                         <div key={item}>
                           <FormLabel
                             onClick={() => {
-                              form.setValue("student_engagement", i.toString());
+                              form.setValue(
+                                "student_engagement",
+                                (i + 1).toString()
+                              );
                               form.clearErrors("student_engagement");
                             }}
                           >
                             <StarIcon
                               className={cn(
                                 "cursor-pointer fill-transparent stroke-gray-400",
-                                parseInt(form.getValues().student_engagement) >=
+                                parseInt(form.getValues().student_engagement) >
                                   i && "fill-yellow-500 stroke-yellow-500",
                                 form.control._formState.errors
                                   .student_engagement && "stroke-red-400"
@@ -316,7 +328,7 @@ const FeedbackForm = ({
                             onClick={() => {
                               form.setValue(
                                 "punctuality_and_discipline",
-                                i.toString()
+                                (i + 1).toString()
                               );
                               form.clearErrors("punctuality_and_discipline");
                             }}
@@ -326,7 +338,7 @@ const FeedbackForm = ({
                                 "cursor-pointer fill-transparent stroke-gray-400",
                                 parseInt(
                                   form.getValues().punctuality_and_discipline
-                                ) >= i && "fill-yellow-500 stroke-yellow-500",
+                                ) > i && "fill-yellow-500 stroke-yellow-500",
                                 form.control._formState.errors
                                   .student_engagement && "stroke-red-400"
                               )}

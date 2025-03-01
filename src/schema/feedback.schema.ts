@@ -11,9 +11,6 @@ export const FeedbackSchema = z.object({
   punctuality_and_discipline: z
     .string()
     .min(1, { message: "This field is required" }),
-  comment: z
-    .string()
-    .min(1, { message: "This field is required" })
-    .max(1000, { message: "Max 1000 characters allowed" }),
+  comment: z.string().max(1000, { message: "Max 1000 characters allowed" }),
 });
 export type FeedbackSchemaType = z.infer<typeof FeedbackSchema>;
