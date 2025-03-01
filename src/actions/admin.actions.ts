@@ -493,7 +493,7 @@ export async function deleteCourse(id: string) {
 // Students Actions
 export async function addNewStudent(form: StudentSchemaType) {
   const parsedBody = StudentSchema.safeParse(form);
-  console.log({ parsedBody });
+
   if (!parsedBody.success) {
     throw new Error(parsedBody.error.message);
   }
@@ -550,13 +550,13 @@ export async function addNewStudent(form: StudentSchemaType) {
       appwriteConfig.studentsCollectionId,
       ID.unique(),
       {
+        accountId: studentAccount.data.$id,
         name,
         course: course_id,
         current_semester: parseInt(current_semester),
         email_id: email,
         gender,
         enrollment_id,
-        accountId: studentAccount.$id,
       }
     );
     return {
