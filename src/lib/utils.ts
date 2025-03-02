@@ -43,3 +43,20 @@ export const getAverageFeedbackStars = (
 
   return result.toFixed(2).toString();
 };
+
+// Function to add each student to Appwrite
+// export const addStudents = async () => {
+//   for (const student of students) {
+//     try {
+//       const parsedStudent = StudentSchema.parse(student);
+//       const addedStudent = await addNewStudent(parsedStudent);
+//       console.log({ addedStudent });
+//       // console.log(`Added student: ${student.name}`);
+//     } catch (error) {
+//       console.error(
+//         `Failed to add student: ${student.email}  Email:${student.email}`,
+//         error
+//       );
+//     }
+//   }
+// };

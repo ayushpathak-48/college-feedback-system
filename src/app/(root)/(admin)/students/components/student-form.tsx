@@ -59,7 +59,6 @@ const StudentForm = ({ courses }: { courses: CoursesType[] }) => {
     setIsLoading(true);
     try {
       const response = await addNewStudent(values);
-      console.log({ response });
       if (response?.success) {
         toast.success(`Student added successfully`);
         form.setValue("name", "");

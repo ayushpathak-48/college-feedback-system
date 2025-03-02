@@ -69,13 +69,12 @@ const EditStudentForm = ({
   });
 
   const handleSubmit = async (values: EditStudentSchemaType) => {
-    console.log({ values });
     setIsLoading(true);
     try {
       const response = await updateStudent(values);
       if (response.success) {
         toast.success(`Student updated successfully`);
-        router.replace("/students");
+        router.push("/students");
       } else {
         toast.error(`Failed to update student Error: ${response.error}`);
       }

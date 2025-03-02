@@ -10,6 +10,8 @@ const Page = async () => {
         columns={columns}
         data={allFeedbacks || []}
         showFeedbackFilters
+        headerTitle={`All Feedbacks`}
+        hideSearch
       />
     </div>
   );

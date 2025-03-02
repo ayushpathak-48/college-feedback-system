@@ -40,7 +40,11 @@ export async function signInAccount(form: SigninType) {
     );
     return { success: true, message: "Sign In Successfully" };
   } catch (error) {
-    return { success: false, message: "Failed to Signin", error: error };
+    return {
+      success: false,
+      message: "Failed to Signin",
+      error: typeof error == "object" ? JSON.stringify(error) : error,
+    };
   }
 }
 

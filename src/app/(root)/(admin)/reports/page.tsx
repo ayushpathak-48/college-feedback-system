@@ -4,11 +4,6 @@ import { ReportCards } from "@/components/report-cards";
 const Page = async () => {
   return (
     <div className="h-[400px]">
-      {/* <CustomAreaChart
-        data={chartData}
-        title="Monthly feedbacks"
-        description="Feedbacks recieved every month"
-      /> */}
       <ReportCards />
     </div>
   );

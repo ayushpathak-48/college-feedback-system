@@ -41,7 +41,7 @@ const EditFacultyForm = ({ faculty }: { faculty: FacultyType }) => {
       const response = await updateFaculty(values);
       if (response.success) {
         toast.success(`Faculty updated successfully`);
-        router.replace("/faculties");
+        router.push("/faculties");
       } else {
         toast.error(`Failed to update faculty  Error: ${response.error}`);
       }

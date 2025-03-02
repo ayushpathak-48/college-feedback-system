@@ -93,7 +93,7 @@ export async function getAllFaculties() {
     return {
       success: false,
       message: "Failed to get faculties",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -115,7 +115,7 @@ export async function getFacultyById(id: string) {
     return {
       success: false,
       message: "Failed to get Single Faculty",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -147,7 +147,7 @@ export async function addNewFaculty(form: FacultySchemaType) {
     return {
       success: false,
       message: "Failed to add faculty",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -179,7 +179,7 @@ export async function updateFaculty(form: EditFacultySchemaType) {
     return {
       success: false,
       message: "Failed to add faculty",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -201,7 +201,7 @@ export async function deleteFaculty(id: string) {
     return {
       success: false,
       message: "Failed to add faculty",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -225,7 +225,7 @@ export async function getFacultyMemberById(member_id: string = "") {
     return {
       success: false,
       message: "Failed to get faculty members",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -262,7 +262,7 @@ export async function getAllFacultyMembers(faculty_id: string = "") {
     return {
       success: false,
       message: "Failed to get faculty members",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -295,7 +295,7 @@ export async function addNewFacultymember(form: FacultyMembersSchemaType) {
     return {
       success: false,
       message: "Failed to add faculty member",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -328,7 +328,7 @@ export async function updateFacultyMember(form: EditFacultyMembersSchemaType) {
     return {
       success: false,
       message: "Failed to update faculty member",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -350,7 +350,7 @@ export async function deleteFacultyMember(id: string) {
     return {
       success: false,
       message: "Failed to add faculty member",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -371,7 +371,7 @@ export async function getAllCourses() {
     return {
       success: false,
       message: "Failed to get courses",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -394,7 +394,7 @@ export async function getCourseById(id: string) {
     return {
       success: false,
       message: "Failed to get single course",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -428,7 +428,7 @@ export async function addNewCourse(form: CourseSchemaType) {
     return {
       success: false,
       message: "Failed to add course",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -462,7 +462,7 @@ export async function updateCourse(form: EditCourseSchemaType) {
     return {
       success: false,
       message: "Failed to update faculty member",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -484,7 +484,7 @@ export async function deleteCourse(id: string) {
     return {
       success: false,
       message: "Failed to add course",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -568,7 +568,7 @@ export async function addNewStudent(form: StudentSchemaType) {
     return {
       success: false,
       message: "Failed to add student",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -639,7 +639,7 @@ export async function updateStudent(form: EditStudentSchemaType) {
     return {
       success: false,
       message: "Failed to update student",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -659,7 +659,7 @@ export async function getAllStudents() {
     return {
       success: false,
       message: "Failed to get students",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -682,7 +682,7 @@ export async function getStudentById(id: string) {
     return {
       success: false,
       message: "Failed to get single student",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -704,7 +704,7 @@ export async function getStudentByEmail(email: string) {
     return {
       success: false,
       message: "Failed to get Single student",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -713,7 +713,6 @@ export async function updateStudentFeedbackList(faculty_id: string) {
   try {
     const { databases } = await createSessionClient();
     const account = await getAccount();
-    console.log({ account });
     if (!account || !account?.student) {
       return {
         success: false,
@@ -752,7 +751,7 @@ export async function updateStudentFeedbackList(faculty_id: string) {
     return {
       success: false,
       message: "Failed to updated feedback list in students collection",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -775,7 +774,7 @@ export async function deleteStudent(documentId: string, accountId: string) {
     return {
       success: false,
       message: "Failed to add student",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -818,7 +817,6 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
     const updatedStudentFeedbackList = await updateStudentFeedbackList(
       faculty_id
     );
-    console.log({ updatedStudentFeedbackList });
     if (!updatedStudentFeedbackList.success) {
       if (updatedStudentFeedbackList?.alreadySubmitted) {
         return {
@@ -833,7 +831,10 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
       return {
         success: false,
         message: "Failed to submit feedback",
-        error: updatedStudentFeedbackList.error,
+        error:
+          typeof updatedStudentFeedbackList?.error == "object"
+            ? JSON.stringify(updatedStudentFeedbackList?.error)
+            : updatedStudentFeedbackList?.error,
       };
     }
 
@@ -846,7 +847,7 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
     return {
       success: false,
       message: "Failed to submit feedback",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -869,7 +870,7 @@ export async function deleteFeedback(id: string) {
     return {
       success: false,
       message: "Failed to add feedback",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -890,7 +891,7 @@ export async function getAllFeedbacks(queries: string[] = []) {
     return {
       success: false,
       message: "Failed to get feedbacks",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }
@@ -920,7 +921,7 @@ export async function toggleFeedback(
     return {
       success: false,
       message: "Failed to toggle feedback",
-      error,
+      error: typeof error == "object" ? JSON.stringify(error) : error,
     };
   }
 }

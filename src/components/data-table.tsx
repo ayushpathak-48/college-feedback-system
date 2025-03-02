@@ -35,12 +35,15 @@ import { DataTableFacetedFilter } from "./faced-filter";
 import { DownloadIcon, FilterIcon } from "lucide-react";
 import { download, generateCsv, mkConfig } from "export-to-csv";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   headerButton?: ReactNode;
   showFeedbackFilters?: boolean;
+  hideSearch?: boolean;
+  headerTitle?: string;
 }
 
 const csvConfig = mkConfig({
@@ -55,6 +58,8 @@ export function DataTable<TData, TValue>({
   data,
   headerButton,
   showFeedbackFilters,
+  hideSearch = false,
+  headerTitle = "",
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -80,16 +85,26 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
-        <Input
-          placeholder="Search..."
-          value={(table?.getState().globalFilter as string) ?? ""}
-          onChange={(event) => table?.setGlobalFilter(event.target.value)}
-          className="max-w-sm"
-        />
+      <div className="flex items-center py-4 justify-between flex-wrap">
+        {headerTitle && (
+          <div className="text-lg font-medium w-max">{headerTitle}</div>
+        )}
+        {!hideSearch && (
+          <Input
+            placeholder="Search..."
+            value={(table?.getState().globalFilter as string) ?? ""}
+            onChange={(event) => table?.setGlobalFilter(event.target.value)}
+            className="max-w-sm"
+          />
+        )}
         {headerButton ? headerButton : <></>}
         {showFeedbackFilters && (
-          <div className="flex items-center gap-2">
+          <div
+            className={cn(
+              "flex items-center gap-2",
+              hideSearch && "justify-between"
+            )}
+          >
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

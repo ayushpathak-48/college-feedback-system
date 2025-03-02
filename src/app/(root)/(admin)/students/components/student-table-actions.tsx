@@ -28,7 +28,6 @@ export const StudentTableActions = ({ student }: { student: StudentType }) => {
     );
 
     try {
-      console.log({ student });
       const response = await deleteStudent(student.$id, student.accountId);
       toast.dismiss(loadingToast);
       if (response.success) {

@@ -72,6 +72,8 @@ const Page = async ({ params }: { params: any }) => {
         columns={columns}
         data={allFeedbacks || []}
         showFeedbackFilters
+        headerTitle={`Single Faculty Feedbacks`}
+        hideSearch
       />
     </div>
   );

@@ -56,7 +56,7 @@ const EditFacultyMemberForm = ({
       const response = await updateFacultyMember(values);
       if (response.success) {
         toast.success(`Faculty member updated successfully`);
-        router.replace("/faculty-members");
+        router.push("/faculty-members");
       } else {
         toast.error(
           `Failed to update faculty member  Error: ${response.error}`
