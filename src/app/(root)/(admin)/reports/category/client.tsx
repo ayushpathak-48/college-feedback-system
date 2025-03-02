@@ -20,8 +20,13 @@ import {
 } from "@/components/ui/chart";
 import { DottedSeparator } from "@/components/DottedSeparator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { AverageStatsCard } from "@/components/average-stats-card";
-// import { ChartColumn } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const chartConfig = {
   views: {
@@ -29,7 +34,9 @@ const chartConfig = {
   },
   value: {
     label: "Avg. rating",
-    color: "",
+  },
+  total_feedbacks: {
+    label: "Total Feedbacks",
   },
 } satisfies ChartConfig;
 
@@ -58,11 +65,21 @@ const transformDataForChart = (data, key) => {
     id: faculty.id,
     label: faculty.label,
     value: faculty.count > 0 ? (faculty.value / faculty.count).toFixed(2) : 0,
+    total_feedbacks: faculty.count,
   }));
 };
 
 export const CategoryReportClient = () => {
   const feedbacks = useDataStore((state) => state.feedbacks);
+
+  const [viewChartType, setViewChartType] = useState({
+    teaching_quality: "both",
+    communication_skills: "both",
+    student_engagement: "both",
+    punctuality_and_discipline: "both",
+    subject_knowledge: "both",
+  });
+
   const [chartData, setChartData] = useState({
     teaching_quality: [],
     communication_skills: [],
@@ -76,6 +93,7 @@ export const CategoryReportClient = () => {
       feedbacks,
       "teaching_quality"
     );
+    console.log({ teaching_quality });
     const communication_skills = transformDataForChart(
       feedbacks,
       "communication_skills"
@@ -105,9 +123,26 @@ export const CategoryReportClient = () => {
     <div>
       {/* <DottedSeparator /> */}
       <Card className="flex flex-col gap-6">
-        <CardHeader>
-          <CardTitle>Teaching Quality</CardTitle>
-        </CardHeader>
+        <div className="flex items-center justify-between px-5">
+          <CardHeader className="px-0">
+            <CardTitle>Teaching Quality</CardTitle>
+          </CardHeader>
+          <Select
+            onValueChange={(val) => {
+              setViewChartType({ ...viewChartType, teaching_quality: val });
+            }}
+            value={viewChartType.teaching_quality}
+          >
+            <SelectTrigger className="w-max">
+              <SelectValue placeholder="" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"both"}>Both</SelectItem>
+              <SelectItem value={"avg"}>Avg. Rating</SelectItem>
+              <SelectItem value={"total_feedbacks"}>Total Feedbacks</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <CardContent>
           <ChartContainer
             config={chartConfig}
@@ -134,26 +169,45 @@ export const CategoryReportClient = () => {
                 tickMargin={8}
                 minTickGap={32}
               />
+
               <ChartTooltip
                 content={
                   <ChartTooltipContent
                     className="w-[150px]"
-                    nameKey="value"
                     labelFormatter={(value) => {
                       return `${value}`;
                     }}
                   />
                 }
               />
-              <Bar dataKey={"value"} fill="hsl(var(--primary))" radius={8}>
+
+              <Bar
+                hide={viewChartType.teaching_quality == "total_feedbacks"}
+                dataKey={"value"}
+                fill="hsl(var(--primary))"
+                radius={8}
+              >
                 <LabelList
                   position="top"
                   offset={12}
                   className="fill-foreground"
                   fontSize={12}
                   formatter={(value) => {
-                    return `${value}/5`;
+                    return `${value}`;
                   }}
+                />
+              </Bar>
+              <Bar
+                hide={viewChartType.teaching_quality == "avg"}
+                dataKey={"total_feedbacks"}
+                fill="hsl(198.6 88.7% 48.4%)"
+                radius={8}
+              >
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
                 />
               </Bar>
             </BarChart>
@@ -162,9 +216,26 @@ export const CategoryReportClient = () => {
       </Card>
       <DottedSeparator className="my-5" />
       <Card className="flex flex-col gap-6">
-        <CardHeader>
-          <CardTitle>Communication Skills</CardTitle>
-        </CardHeader>
+        <div className="flex items-center justify-between px-5">
+          <CardHeader className="px-0">
+            <CardTitle>Communication Skills</CardTitle>
+          </CardHeader>
+          <Select
+            onValueChange={(val) => {
+              setViewChartType({ ...viewChartType, communication_skills: val });
+            }}
+            value={viewChartType.communication_skills}
+          >
+            <SelectTrigger className="w-max">
+              <SelectValue placeholder="" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"both"}>Both</SelectItem>
+              <SelectItem value={"avg"}>Avg. Rating</SelectItem>
+              <SelectItem value={"total_feedbacks"}>Total Feedbacks</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <CardContent>
           <ChartContainer
             config={chartConfig}
@@ -202,15 +273,44 @@ export const CategoryReportClient = () => {
                   />
                 }
               />
-              <Bar dataKey={"value"} fill="hsl(var(--primary))" radius={8}>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    labelFormatter={(value) => {
+                      return `${value}`;
+                    }}
+                  />
+                }
+              />
+
+              <Bar
+                hide={viewChartType.communication_skills == "total_feedbacks"}
+                dataKey={"value"}
+                fill="hsl(var(--primary))"
+                radius={8}
+              >
                 <LabelList
                   position="top"
                   offset={12}
                   className="fill-foreground"
                   fontSize={12}
                   formatter={(value) => {
-                    return `${value}/5`;
+                    return `${value}`;
                   }}
+                />
+              </Bar>
+              <Bar
+                hide={viewChartType.communication_skills == "avg"}
+                dataKey={"total_feedbacks"}
+                fill="hsl(198.6 88.7% 48.4%)"
+                radius={8}
+              >
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
                 />
               </Bar>
             </BarChart>
@@ -219,9 +319,26 @@ export const CategoryReportClient = () => {
       </Card>
       <DottedSeparator className="my-5" />
       <Card className="flex flex-col gap-6">
-        <CardHeader>
-          <CardTitle>Student Engagement</CardTitle>
-        </CardHeader>
+        <div className="flex items-center justify-between px-5">
+          <CardHeader className="px-0">
+            <CardTitle>Student Engagement</CardTitle>
+          </CardHeader>
+          <Select
+            onValueChange={(val) => {
+              setViewChartType({ ...viewChartType, student_engagement: val });
+            }}
+            value={viewChartType.student_engagement}
+          >
+            <SelectTrigger className="w-max">
+              <SelectValue placeholder="" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"both"}>Both</SelectItem>
+              <SelectItem value={"avg"}>Avg. Rating</SelectItem>
+              <SelectItem value={"total_feedbacks"}>Total Feedbacks</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <CardContent>
           <ChartContainer
             config={chartConfig}
@@ -259,15 +376,44 @@ export const CategoryReportClient = () => {
                   />
                 }
               />
-              <Bar dataKey={"value"} fill="hsl(var(--primary))" radius={8}>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    labelFormatter={(value) => {
+                      return `${value}`;
+                    }}
+                  />
+                }
+              />
+
+              <Bar
+                hide={viewChartType.student_engagement == "total_feedbacks"}
+                dataKey={"value"}
+                fill="hsl(var(--primary))"
+                radius={8}
+              >
                 <LabelList
                   position="top"
                   offset={12}
                   className="fill-foreground"
                   fontSize={12}
                   formatter={(value) => {
-                    return `${value}/5`;
+                    return `${value}`;
                   }}
+                />
+              </Bar>
+              <Bar
+                hide={viewChartType.student_engagement == "avg"}
+                dataKey={"total_feedbacks"}
+                fill="hsl(198.6 88.7% 48.4%)"
+                radius={8}
+              >
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
                 />
               </Bar>
             </BarChart>
@@ -276,9 +422,26 @@ export const CategoryReportClient = () => {
       </Card>
       <DottedSeparator className="my-5" />
       <Card className="flex flex-col gap-6">
-        <CardHeader>
-          <CardTitle>Subject Knowledge</CardTitle>
-        </CardHeader>
+        <div className="flex items-center justify-between px-5">
+          <CardHeader className="px-0">
+            <CardTitle>Subject Knowledge</CardTitle>
+          </CardHeader>
+          <Select
+            onValueChange={(val) => {
+              setViewChartType({ ...viewChartType, subject_knowledge: val });
+            }}
+            value={viewChartType.subject_knowledge}
+          >
+            <SelectTrigger className="w-max">
+              <SelectValue placeholder="" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"both"}>Both</SelectItem>
+              <SelectItem value={"avg"}>Avg. Rating</SelectItem>
+              <SelectItem value={"total_feedbacks"}>Total Feedbacks</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <CardContent>
           <ChartContainer
             config={chartConfig}
@@ -316,15 +479,44 @@ export const CategoryReportClient = () => {
                   />
                 }
               />
-              <Bar dataKey={"value"} fill="hsl(var(--primary))" radius={8}>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    labelFormatter={(value) => {
+                      return `${value}`;
+                    }}
+                  />
+                }
+              />
+
+              <Bar
+                hide={viewChartType.subject_knowledge == "total_feedbacks"}
+                dataKey={"value"}
+                fill="hsl(var(--primary))"
+                radius={8}
+              >
                 <LabelList
                   position="top"
                   offset={12}
                   className="fill-foreground"
                   fontSize={12}
                   formatter={(value) => {
-                    return `${value}/5`;
+                    return `${value}`;
                   }}
+                />
+              </Bar>
+              <Bar
+                hide={viewChartType.subject_knowledge == "avg"}
+                dataKey={"total_feedbacks"}
+                fill="hsl(198.6 88.7% 48.4%)"
+                radius={8}
+              >
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
                 />
               </Bar>
             </BarChart>
@@ -333,9 +525,29 @@ export const CategoryReportClient = () => {
       </Card>
       <DottedSeparator className="my-5" />
       <Card className="flex flex-col gap-6">
-        <CardHeader>
-          <CardTitle>Punctuality and Discipline</CardTitle>
-        </CardHeader>
+        <div className="flex items-center justify-between px-5">
+          <CardHeader className="px-0">
+            <CardTitle>Punctuality and Discipline</CardTitle>
+          </CardHeader>
+          <Select
+            onValueChange={(val) => {
+              setViewChartType({
+                ...viewChartType,
+                punctuality_and_discipline: val,
+              });
+            }}
+            value={viewChartType.punctuality_and_discipline}
+          >
+            <SelectTrigger className="w-max">
+              <SelectValue placeholder="" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"both"}>Both</SelectItem>
+              <SelectItem value={"avg"}>Avg. Rating</SelectItem>
+              <SelectItem value={"total_feedbacks"}>Total Feedbacks</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <CardContent>
           <ChartContainer
             config={chartConfig}
@@ -373,15 +585,46 @@ export const CategoryReportClient = () => {
                   />
                 }
               />
-              <Bar dataKey={"value"} fill="hsl(var(--primary))" radius={8}>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    labelFormatter={(value) => {
+                      return `${value}`;
+                    }}
+                  />
+                }
+              />
+
+              <Bar
+                hide={
+                  viewChartType.punctuality_and_discipline == "total_feedbacks"
+                }
+                dataKey={"value"}
+                fill="hsl(var(--primary))"
+                radius={8}
+              >
                 <LabelList
                   position="top"
                   offset={12}
                   className="fill-foreground"
                   fontSize={12}
                   formatter={(value) => {
-                    return `${value}/5`;
+                    return `${value}`;
                   }}
+                />
+              </Bar>
+              <Bar
+                hide={viewChartType.punctuality_and_discipline == "avg"}
+                dataKey={"total_feedbacks"}
+                fill="hsl(198.6 88.7% 48.4%)"
+                radius={8}
+              >
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
                 />
               </Bar>
             </BarChart>
