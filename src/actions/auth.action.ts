@@ -12,7 +12,7 @@ import {
 import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getStudentByEmail } from "./admin.actions";
+import { getStudentByEmail, getStudentByEnrollmentId } from "./admin.actions";
 
 export async function signInAccount(form: SigninType) {
   const parsedBody = SignInSchema.safeParse(form);
@@ -20,9 +20,33 @@ export async function signInAccount(form: SigninType) {
     throw new Error(parsedBody.error.message);
   }
   const { account } = await createAdminClient();
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+    parsedBody.data.email_or_enrollment
+  );
+
+  let email = "";
+
+  if (isEmail) {
+    email = parsedBody.data.email_or_enrollment;
+  } else {
+    const student = await getStudentByEnrollmentId(
+      parsedBody.data.email_or_enrollment
+    );
+    console.log({ student });
+    if (student.success && student.data?.email_id) {
+      email = student.data?.email_id;
+    } else {
+      return {
+        success: false,
+        message: "Invalid email or enrollment",
+        error: student.error || "Invalid email or Enrollment Id",
+      };
+    }
+  }
+
   try {
     const session = await account.createEmailPasswordSession(
-      parsedBody.data.email,
+      email,
       parsedBody.data.password
     );
     const oneYear = 365 * 24 * 60 * 60 * 1000;

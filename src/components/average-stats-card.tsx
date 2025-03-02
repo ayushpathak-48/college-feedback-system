@@ -4,11 +4,11 @@ import { Card, CardContent } from "./ui/card";
 export const AverageStatsCard = ({
   icon,
   label,
-  value,
+  value = "",
 }: {
   icon: any;
   label: string;
-  value: string;
+  value?: string | undefined | null;
 }) => {
   const Icon = icon;
   return (

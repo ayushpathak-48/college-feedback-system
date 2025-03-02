@@ -809,6 +809,33 @@ export async function getStudentByEmail(email: string) {
   }
 }
 
+export async function getStudentByEnrollmentId(enrollment_id: string) {
+  try {
+    const { databases } = await createAdminClient();
+    const singleFaculty = await databases.listDocuments<StudentType>(
+      appwriteConfig.databaseId,
+      appwriteConfig.studentsCollectionId,
+      [Query.equal("enrollment_id", enrollment_id)]
+    );
+    return {
+      success: true,
+      message: "Single student by email",
+      data: singleFaculty.documents[0],
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: "Failed to get Single student",
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
+    };
+  }
+}
+
 export async function updateStudentFeedbackList(faculty_id: string) {
   try {
     const { databases } = await createSessionClient();

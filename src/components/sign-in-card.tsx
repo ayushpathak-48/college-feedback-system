@@ -25,7 +25,7 @@ export const SignInCard = () => {
   const form = useForm<SigninType>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
-      email: "",
+      email_or_enrollment: "",
       password: "",
     },
   });
@@ -60,7 +60,7 @@ export const SignInCard = () => {
             onSubmit={form.handleSubmit(handleSubmit)}
           >
             <FormField
-              name="email"
+              name="email_or_enrollment"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -68,7 +68,7 @@ export const SignInCard = () => {
                     <Input
                       {...field}
                       type="text"
-                      placeholder="Enter your email"
+                      placeholder="Enter your email or Enrollment Id"
                     />
                   </FormControl>
                   <FormMessage />
