@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteStudent } from "@/actions/admin.actions";
+import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
 import { useConfirm } from "@/hooks/use-confirm";
 import { StudentType } from "@/types";
@@ -47,27 +48,32 @@ export const StudentTableActions = ({ student }: { student: StudentType }) => {
   return (
     <div className="flex items-center gap-2 w-full">
       <ConfirmDialog />
-      <Button variant={"outline"} asChild>
-        <Link href={`/students/edit/${student.$id}`}>
-          Edit <PencilIcon />
-        </Link>
-      </Button>
-      <Button
-        onClick={handleDeleteStudent}
-        variant={"outline"}
-        className="text-red-500 border-red-200 hover:text-red-400"
-        disabled={isDeleting}
-      >
-        {isDeleting ? (
-          <>
-            <LoaderIcon className="animate-spin" /> Deleting...{" "}
-          </>
-        ) : (
-          <>
-            Delete <TrashIcon />
-          </>
-        )}
-      </Button>
+
+      <CustomTooltip content="Edit" side="left">
+        <Button variant={"outline"} asChild>
+          <Link href={`/students/edit/${student.$id}`}>
+            <PencilIcon />
+          </Link>
+        </Button>
+      </CustomTooltip>
+      <CustomTooltip content="Delete" side="right">
+        <Button
+          onClick={handleDeleteStudent}
+          variant={"outline"}
+          className="text-red-500 border-red-200 hover:text-red-400"
+          disabled={isDeleting}
+        >
+          {isDeleting ? (
+            <>
+              <LoaderIcon className="animate-spin" /> Deleting...{" "}
+            </>
+          ) : (
+            <>
+              <TrashIcon />
+            </>
+          )}
+        </Button>
+      </CustomTooltip>
     </div>
   );
 };

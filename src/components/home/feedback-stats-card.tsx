@@ -1,10 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import { ChartColumn } from "lucide-react";
 import { AverageStatsCard } from "../average-stats-card";
-import { StudentType } from "@/types";
+import {
+  CoursesType,
+  FacultyMemberType,
+  FacultyType,
+  StudentType,
+} from "@/types";
 import { useDataStore } from "@/stores/data.store";
 
-const FeedbackStatsCards = ({ students }: { students: StudentType }) => {
+const FeedbackStatsCards = ({
+  students,
+  courses,
+  faculties,
+  facultyMembers,
+}: {
+  students: StudentType[];
+  courses: CoursesType[];
+  faculties: FacultyType[];
+  facultyMembers: FacultyMemberType[];
+}) => {
   const feedbacks = useDataStore((state) => state.feedbacks);
   return (
     <div className="py-8 flex items-center flex-wrap gap-6">
@@ -14,73 +31,24 @@ const FeedbackStatsCards = ({ students }: { students: StudentType }) => {
         value={feedbacks?.length?.toString()}
       />
       <AverageStatsCard
-        label="Students submitted feedback"
+        label="Total Students"
         icon={ChartColumn}
-        value={
-          students &&
-          students
-            ?.filter(
-              ({ submittedFacultyMemberReviews }: any) =>
-                submittedFacultyMemberReviews &&
-                submittedFacultyMemberReviews?.length > 0
-            )
-            ?.length?.toString()
-        }
+        value={students && students?.length?.toString()}
       />
       <AverageStatsCard
-        label="Students not submitted feedback"
+        label="Total Faculties"
         icon={ChartColumn}
-        value={
-          students &&
-          students
-            ?.filter(
-              ({ submittedFacultyMemberReviews }: any) =>
-                submittedFacultyMemberReviews &&
-                submittedFacultyMemberReviews?.length > 0
-            )
-            .filter(({ gender }: any) => gender == "MALE")
-            ?.length?.toString()
-        }
+        value={faculties && faculties?.length?.toString()}
       />
       <AverageStatsCard
-        label="Total Comments"
+        label="Total Courses"
         icon={ChartColumn}
-        value={
-          feedbacks &&
-          feedbacks
-            ?.filter(({ comment }: any) => comment && comment != "")
-            ?.length?.toString()
-        }
+        value={courses && courses?.length?.toString()}
       />
       <AverageStatsCard
-        label="Total Male students"
+        label="Total Faculty Members"
         icon={ChartColumn}
-        value={
-          students &&
-          students
-            ?.filter(
-              ({ submittedFacultyMemberReviews }: any) =>
-                submittedFacultyMemberReviews &&
-                submittedFacultyMemberReviews?.length > 0
-            )
-            .filter(({ gender }: any) => gender == "MALE")
-            ?.length?.toString()
-        }
-      />
-      <AverageStatsCard
-        label="Total Female students"
-        icon={ChartColumn}
-        value={
-          students &&
-          students
-            ?.filter(
-              ({ submittedFacultyMemberReviews }: any) =>
-                submittedFacultyMemberReviews &&
-                submittedFacultyMemberReviews?.length > 0
-            )
-            .filter(({ gender }: any) => gender == "FEMALE")
-            ?.length?.toString()
-        }
+        value={facultyMembers && facultyMembers?.length?.toString()}
       />
     </div>
   );

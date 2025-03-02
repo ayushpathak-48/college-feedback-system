@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FacultyMemberTableActions } from "./faculty-member-table-actions";
 import Link from "next/link";
+import { CustomTooltip } from "@/components/custom-tooltip";
 
 export const columns: ColumnDef<FacultyMemberType>[] = [
   {
@@ -73,11 +74,13 @@ export const columns: ColumnDef<FacultyMemberType>[] = [
             {totalFeedbacks == 0 ? (
               <span className="text-gray-400">No Feedbacks</span>
             ) : (
-              <Button variant={"outline"} asChild>
-                <Link href={`/faculty-members/feedbacks/${row.original.$id}`}>
-                  {totalFeedbacks} feedback{totalFeedbacks > 1 ? "s" : ""}
-                </Link>
-              </Button>
+              <CustomTooltip content={`View feedbacks of ${row.original.name}`}>
+                <Button variant={"outline"} asChild>
+                  <Link href={`/faculty-members/feedbacks/${row.original.$id}`}>
+                    {totalFeedbacks} feedback{totalFeedbacks > 1 ? "s" : ""}
+                  </Link>
+                </Button>
+              </CustomTooltip>
             )}
           </span>
         </div>

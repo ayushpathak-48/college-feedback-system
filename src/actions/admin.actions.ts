@@ -467,6 +467,19 @@ export async function addNewCourse(form: CourseSchemaType) {
 
   const { name, faculty_id, total_semesters } = parsedBody.data;
 
+  const alreadyTakenName = await getAllDocuments(
+    appwriteConfig.coursesCollectionId,
+    [Query.equal("name", name), Query.equal("faculty", faculty_id)]
+  );
+
+  if (alreadyTakenName?.total > 0) {
+    return {
+      success: false,
+      message: "Course name already added for the faculty",
+      error: "Course name already added for the faculty",
+    };
+  }
+
   try {
     const { databases } = await createSessionClient();
     const createdCourse = await databases.createDocument(

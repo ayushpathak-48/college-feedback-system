@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteFacultyMember } from "@/actions/admin.actions";
+import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
 import { useConfirm } from "@/hooks/use-confirm";
 import { FacultyMemberType } from "@/types";
@@ -48,18 +49,22 @@ export const FacultyMemberTableActions = ({
   return (
     <div className="flex items-center gap-2 w-full">
       <ConfirmDialog />
-      <Button variant={"outline"} asChild>
-        <Link href={`/faculty-members/edit/${member.$id}`}>
-          Edit <PencilIcon />
-        </Link>
-      </Button>
-      <Button
-        onClick={handleDeleteFacultyMember}
-        variant={"outline"}
-        className="text-red-500 border-red-200 hover:text-red-400"
-      >
-        Delete <TrashIcon />
-      </Button>
+      <CustomTooltip content="Edit" side="left">
+        <Button variant={"outline"} asChild>
+          <Link href={`/faculty-members/edit/${member.$id}`}>
+            <PencilIcon />
+          </Link>
+        </Button>
+      </CustomTooltip>
+      <CustomTooltip content="Delete" side="right">
+        <Button
+          onClick={handleDeleteFacultyMember}
+          variant={"outline"}
+          className="text-red-500 border-red-200 hover:text-red-400"
+        >
+          <TrashIcon />
+        </Button>
+      </CustomTooltip>
     </div>
   );
 };

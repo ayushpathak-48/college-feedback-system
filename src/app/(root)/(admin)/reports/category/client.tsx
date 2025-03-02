@@ -266,9 +266,8 @@ export const CategoryReportClient = () => {
                 content={
                   <ChartTooltipContent
                     className="w-[150px]"
-                    nameKey="value"
                     labelFormatter={(value) => {
-                      return value;
+                      return `${value}`;
                     }}
                   />
                 }
@@ -369,9 +368,8 @@ export const CategoryReportClient = () => {
                 content={
                   <ChartTooltipContent
                     className="w-[150px]"
-                    nameKey="value"
                     labelFormatter={(value) => {
-                      return value;
+                      return `${value}`;
                     }}
                   />
                 }
@@ -472,9 +470,8 @@ export const CategoryReportClient = () => {
                 content={
                   <ChartTooltipContent
                     className="w-[150px]"
-                    nameKey="value"
                     labelFormatter={(value) => {
-                      return value;
+                      return `${value}`;
                     }}
                   />
                 }
@@ -578,9 +575,8 @@ export const CategoryReportClient = () => {
                 content={
                   <ChartTooltipContent
                     className="w-[150px]"
-                    nameKey="value"
                     labelFormatter={(value) => {
-                      return value;
+                      return `${value}`;
                     }}
                   />
                 }

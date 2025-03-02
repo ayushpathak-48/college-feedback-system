@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4 justify-between flex-wrap">
+      <div className="flex items-center py-4 justify-between flex-wrap gap-2">
         {headerTitle && (
           <div className="text-lg font-medium w-max">{headerTitle}</div>
         )}
