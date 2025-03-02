@@ -5,6 +5,7 @@ import {
   HashIcon,
   HomeIcon,
   UsersIcon,
+  Building,
   UserSquareIcon,
 } from "lucide-react";
 
@@ -68,8 +69,8 @@ export const routes = [
   {
     label: "Faculties",
     href: "/faculties",
-    icon: UserSquareIcon,
-    activeIcon: UserSquareIcon,
+    icon: Building,
+    activeIcon: Building,
     accessible: ["admin"],
   },
   {
