@@ -168,6 +168,7 @@ export const CategoryReportClient = () => {
                 axisLine={false}
                 tickMargin={8}
                 minTickGap={32}
+                tickCount={10}
               />
 
               <ChartTooltip
@@ -190,7 +191,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
                     return `${value}`;
@@ -205,8 +206,8 @@ export const CategoryReportClient = () => {
               >
                 <LabelList
                   position="top"
-                  offset={12}
-                  className="fill-foreground"
+                  offset={5}
+                  className="fill-black"
                   fontSize={12}
                 />
               </Bar>
@@ -261,16 +262,7 @@ export const CategoryReportClient = () => {
                 axisLine={false}
                 tickMargin={8}
                 minTickGap={32}
-              />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    className="w-[150px]"
-                    labelFormatter={(value) => {
-                      return `${value}`;
-                    }}
-                  />
-                }
+                tickCount={10}
               />
               <ChartTooltip
                 content={
@@ -292,7 +284,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
                     return `${value}`;
@@ -308,7 +300,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                 />
               </Bar>
@@ -363,16 +355,7 @@ export const CategoryReportClient = () => {
                 axisLine={false}
                 tickMargin={8}
                 minTickGap={32}
-              />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    className="w-[150px]"
-                    labelFormatter={(value) => {
-                      return `${value}`;
-                    }}
-                  />
-                }
+                tickCount={10}
               />
               <ChartTooltip
                 content={
@@ -394,7 +377,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
                     return `${value}`;
@@ -410,7 +393,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                 />
               </Bar>
@@ -465,16 +448,7 @@ export const CategoryReportClient = () => {
                 axisLine={false}
                 tickMargin={8}
                 minTickGap={32}
-              />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    className="w-[150px]"
-                    labelFormatter={(value) => {
-                      return `${value}`;
-                    }}
-                  />
-                }
+                tickCount={10}
               />
               <ChartTooltip
                 content={
@@ -496,7 +470,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
                     return `${value}`;
@@ -512,7 +486,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                 />
               </Bar>
@@ -570,6 +544,7 @@ export const CategoryReportClient = () => {
                 axisLine={false}
                 tickMargin={8}
                 minTickGap={32}
+                tickCount={10}
               />
               <ChartTooltip
                 content={
@@ -603,7 +578,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
                     return `${value}`;
@@ -619,7 +594,7 @@ export const CategoryReportClient = () => {
                 <LabelList
                   position="top"
                   offset={12}
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize={12}
                 />
               </Bar>
