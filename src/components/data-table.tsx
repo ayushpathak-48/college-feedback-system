@@ -119,16 +119,6 @@ export function DataTable<TData, TValue>({
               <DropdownMenuContent align="end" className="w-[300]">
                 <DropdownMenuLabel>Filter columns</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {/* {table.getColumn("name") ? (
-                  <DataTableFacetedFilter
-                    triggerClass="border-0 w-full m-0 rounded-none justify-start"
-                    title="Faculty Member Name"
-                    column={table.getColumn("name")}
-                    options={[]}
-                  />
-                ) : (
-                  <></>
-                )} */}
                 {table.getColumn("teaching_quality") ? (
                   <DataTableFacetedFilter
                     triggerClass="border-0 w-full m-0 rounded-none justify-start"

@@ -156,7 +156,7 @@ export const columns: ColumnDef<StudentType>[] = [
     },
   },
   {
-    accessorKey: "course",
+    accessorKey: "course.name",
     header: ({ column }) => {
       return (
         <Button

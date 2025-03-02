@@ -11,6 +11,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { SignInSchema, SigninType } from "@/schema/auth.schema";
@@ -64,6 +65,7 @@ export const SignInCard = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Email or Enrollment Id</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -80,6 +82,7 @@ export const SignInCard = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
                       {...field}

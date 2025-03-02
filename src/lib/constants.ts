@@ -9,7 +9,7 @@ import {
   UserSquareIcon,
 } from "lucide-react";
 
-export const APP_TITLE = "Feedgun";
+export const APP_TITLE = "Feedbun";
 
 export const pathnameMap = {
   feedbacks: {
