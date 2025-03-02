@@ -88,7 +88,9 @@ const EditStudentForm = ({
   return (
     <Card className="w-full h-max md:w-[487px] mx-auto">
       <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Update Student</CardTitle>
+        <CardTitle className="text-2xl">
+          Update Student: {student.name}
+        </CardTitle>
       </CardHeader>
       <DottedSeparator className="px-7 mb-2" />
       <CardContent className="p-7">

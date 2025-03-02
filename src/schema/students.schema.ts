@@ -24,3 +24,12 @@ export const EditStudentSchema = z.object({
     .min(1, { message: "Current Semester is required" }),
 });
 export type EditStudentSchemaType = z.infer<typeof EditStudentSchema>;
+
+export const UpdatePasswordSchema = z.object({
+  student_id: z.string(),
+  password: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .min(8, { message: "Password should be minimum 8 characters long" }),
+});
+export type UpdatePasswordSchemaType = z.infer<typeof UpdatePasswordSchema>;

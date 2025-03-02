@@ -13,6 +13,10 @@ import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getStudentByEmail, getStudentByEnrollmentId } from "./admin.actions";
+import {
+  UpdatePasswordSchema,
+  UpdatePasswordSchemaType,
+} from "@/schema/students.schema";
 
 export async function signInAccount(form: SigninType) {
   const parsedBody = SignInSchema.safeParse(form);
@@ -109,6 +113,31 @@ export async function deleteAccount(id: string) {
       success: true,
       message: "Sign Up successfull",
       data: deletedAccount,
+    };
+  } catch (error) {
+    return { success: false, message: "Sign Up failed", error };
+  }
+}
+
+export async function updatePassword(form: UpdatePasswordSchemaType) {
+  const parsedBody = UpdatePasswordSchema.safeParse(form);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+  const { users } = await createAdminClient();
+
+  const { student_id, password } = parsedBody.data;
+
+  try {
+    const updatedStudentPassword = await users.updatePassword(
+      student_id,
+      password
+    );
+
+    return {
+      success: true,
+      message: "Password updated successfully",
+      data: updatedStudentPassword,
     };
   } catch (error) {
     return { success: false, message: "Sign Up failed", error };

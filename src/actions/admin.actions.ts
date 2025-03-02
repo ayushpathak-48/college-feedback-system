@@ -468,7 +468,7 @@ export async function addNewCourse(form: CourseSchemaType) {
 
   const { name, faculty_id, total_semesters } = parsedBody.data;
 
-  const alreadyTakenName = await getAllDocuments(
+  const alreadyTakenName = await getLatestFiveDocuments(
     appwriteConfig.coursesCollectionId,
     [Query.equal("name", name), Query.equal("faculty", faculty_id)]
   );

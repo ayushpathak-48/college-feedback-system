@@ -2,7 +2,7 @@
 // @ts-nocheck
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useQueryState } from "nuqs";
 import { FacultyMemberType, FeedbackType } from "@/types";
 import { useDataStore } from "@/stores/data.store";
@@ -24,6 +24,14 @@ import { ChartColumn, Check, ChevronsUpDown, LoaderCircle } from "lucide-react";
 import { cn, getAverageFeedbackStars } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { AverageStatsCard } from "@/components/average-stats-card";
+
+const feedbackCategories = [
+  { label: "Teaching Quality", key: "teaching_quality" },
+  { label: "Communication Skills", key: "communication_skills" },
+  { label: "Subject Knowledge", key: "subject_knowledge" },
+  { label: "Student Engagement", key: "student_engagement" },
+  { label: "Punctuality & Discipline", key: "punctuality_and_discipline" },
+];
 
 export const FacultyMemberReportClient = ({
   members,
@@ -129,46 +137,33 @@ export const FacultyMemberReportClient = ({
               ?.length?.toString()
           }
         />
-        <AverageStatsCard
-          label="Teaching Quality"
-          icon={ChartColumn}
-          value={`${getAverageFeedbackStars(
-            reportData || [],
-            "teaching_quality"
-          )}/5`}
-        />
-        <AverageStatsCard
-          label="Communication Skills"
-          icon={ChartColumn}
-          value={`${getAverageFeedbackStars(
-            reportData || [],
-            "communication_skills"
-          )}/5`}
-        />
-        <AverageStatsCard
-          label="Subject Knowledge"
-          icon={ChartColumn}
-          value={`${getAverageFeedbackStars(
-            reportData || [],
-            "subject_knowledge"
-          )}/5`}
-        />
-        <AverageStatsCard
-          label="Student Engagement"
-          icon={ChartColumn}
-          value={`${getAverageFeedbackStars(
-            reportData || [],
-            "student_engagement"
-          )}/5`}
-        />
-        <AverageStatsCard
-          label="Punctuality & Discipline"
-          icon={ChartColumn}
-          value={`${getAverageFeedbackStars(
-            reportData || [],
-            "punctuality_and_discipline"
-          )}/5`}
-        />
+        {feedbackCategories.map((ele) => {
+          const value = getAverageFeedbackStars(reportData || [], ele?.key);
+          return (
+            <Fragment key={ele.key}>
+              <AverageStatsCard
+                badgeText={
+                  parseInt(value) > 0 && parseInt(value) < 3
+                    ? "Needs Improvement"
+                    : ""
+                }
+                badgeClass={
+                  parseInt(value) > 0 && parseInt(value) < 3
+                    ? "text-red-400"
+                    : ""
+                }
+                label={ele.label}
+                icon={ChartColumn}
+                value={`${value}/5`}
+                cardClass={
+                  parseInt(value) > 0 && parseInt(value) < 3
+                    ? "border-red-400"
+                    : ""
+                }
+              />
+            </Fragment>
+          );
+        })}
       </div>
     </div>
   );

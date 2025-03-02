@@ -17,7 +17,7 @@ const Page = async () => {
     : [];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 h-screen">
       {isAcceptingFeedback ? (
         <>
           {facultyMembers?.map((member) => (
@@ -25,10 +25,10 @@ const Page = async () => {
           ))}
         </>
       ) : (
-        <div className="h-full max-h-2/3 flex items-center justify-center ">
+        <div className="h-2/3 flex items-center justify-center ">
           <div className="flex flex-col items-center justify-center gap-2 rounded max-w-xl w-full m-auto h-max">
             <MessageCircleOffIcon className="size-20 text-primary/70" />
-            <div className="mt-4 text-2xl font-medium">Feedback Disabled</div>
+            <div className="mt-4 text-2xl font-medium">Feedback Locked</div>
             <div className="text-gray-400">
               We are currently not accepting feedback
             </div>

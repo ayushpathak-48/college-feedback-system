@@ -2,19 +2,35 @@
 import { ChartBarIcon } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { Badge } from "./ui/badge";
 
 export const AverageStatsCard = ({
   icon = ChartBarIcon,
   label,
   value = "",
+  cardClass = "",
+  badgeClass = "",
+  badgeText = "",
 }: {
   icon?: any;
   label: string;
   value?: ReactNode | string | undefined | null;
+  cardClass?: string;
+  badgeClass?: string;
+  badgeText?: string;
 }) => {
   const Icon = icon;
   return (
-    <Card className="min-w-[250px] flex-1 grow">
+    <Card className={cn("min-w-[250px] flex-1 grow relative", cardClass)}>
+      {badgeText != "" && (
+        <Badge
+          variant={"outline"}
+          className={cn("bg-white absolute -top-2 left-1", badgeClass)}
+        >
+          {badgeText}
+        </Badge>
+      )}
       <CardContent className="flex flex-col items-start gap-4 p-3 px-5">
         <div className="flex items-center justify-between w-full">
           <div className="text-2xl font-bold">{value}</div>
