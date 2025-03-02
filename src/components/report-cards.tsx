@@ -20,7 +20,7 @@ export const ReportCards = () => {
               height={200}
               width={300}
               alt="Faculty Feedback Reports"
-              className="object-cover h-[200px] w-full rounded-xl"
+              className="object-contain h-[200px] w-full rounded-xl"
             />
           </CardContent>
           <CardHeader>
