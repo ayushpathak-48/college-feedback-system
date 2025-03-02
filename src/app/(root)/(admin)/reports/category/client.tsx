@@ -13,6 +13,19 @@ import {
   YAxis,
 } from "recharts";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
@@ -27,6 +40,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { useQueryState } from "nuqs";
+import { cn } from "@/lib/utils";
 
 const chartConfig = {
   views: {
@@ -40,26 +58,28 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const transformDataForChart = (data, key) => {
+const transformDataForChart = (data, key, facultyId) => {
   if (!data?.length) return;
   const facultyMap = {};
 
-  data?.forEach((ele) => {
-    const facultyId = ele?.faculty?.$id;
-    const facultyName = ele?.faculty?.name;
+  data
+    ?.filter(({ faculty }) => faculty?.faculty?.$id == facultyId)
+    ?.forEach((ele) => {
+      const facultyId = ele?.faculty?.$id;
+      const facultyName = ele?.faculty?.name;
 
-    if (!facultyMap[facultyId]) {
-      facultyMap[facultyId] = {
-        key: key,
-        id: facultyId,
-        label: facultyName,
-        value: 0,
-        count: 0,
-      };
-    }
-    facultyMap[facultyId].value += parseFloat(ele?.[key]) || 0;
-    facultyMap[facultyId].count += 1;
-  });
+      if (!facultyMap[facultyId]) {
+        facultyMap[facultyId] = {
+          key: key,
+          id: facultyId,
+          label: facultyName,
+          value: 0,
+          count: 0,
+        };
+      }
+      facultyMap[facultyId].value += parseFloat(ele?.[key]) || 0;
+      facultyMap[facultyId].count += 1;
+    });
   return Object.values(facultyMap).map((faculty) => ({
     key: faculty.key,
     id: faculty.id,
@@ -71,6 +91,12 @@ const transformDataForChart = (data, key) => {
 
 export const CategoryReportClient = () => {
   const feedbacks = useDataStore((state) => state.feedbacks);
+  const [faculties, setFaculties] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const [activeFaculty, setActiveFaculty] = useQueryState("faculty", {
+    defaultValue: "",
+  });
 
   const [viewChartType, setViewChartType] = useState({
     teaching_quality: "both",
@@ -89,25 +115,50 @@ export const CategoryReportClient = () => {
   });
 
   useEffect(() => {
+    const uniqueFacultyMembers = Array.from(
+      new Map(feedbacks?.map(({ faculty }) => [faculty.$id, faculty])).values()
+    );
+
+    const uniqueFaculties = Array.from(
+      new Map(
+        uniqueFacultyMembers?.map(({ faculty }) => [faculty.$id, faculty])
+      ).values()
+    );
+
+    setFaculties(uniqueFaculties);
+  }, [feedbacks]);
+
+  useEffect(() => {
+    if (faculties?.length) {
+      setActiveFaculty(faculties[0]?.$id);
+    }
+  }, [faculties]);
+
+  useEffect(() => {
     const teaching_quality = transformDataForChart(
       feedbacks,
-      "teaching_quality"
+      "teaching_quality",
+      activeFaculty
     );
     const communication_skills = transformDataForChart(
       feedbacks,
-      "communication_skills"
+      "communication_skills",
+      activeFaculty
     );
     const student_engagement = transformDataForChart(
       feedbacks,
-      "student_engagement"
+      "student_engagement",
+      activeFaculty
     );
     const punctuality_and_discipline = transformDataForChart(
       feedbacks,
-      "punctuality_and_discipline"
+      "punctuality_and_discipline",
+      activeFaculty
     );
     const subject_knowledge = transformDataForChart(
       feedbacks,
-      "subject_knowledge"
+      "subject_knowledge",
+      activeFaculty
     );
     setChartData({
       teaching_quality,
@@ -116,11 +167,65 @@ export const CategoryReportClient = () => {
       punctuality_and_discipline,
       subject_knowledge,
     });
-  }, [feedbacks]);
+  }, [activeFaculty, feedbacks]);
 
   return (
     <div>
-      {/* <DottedSeparator /> */}
+      {faculties?.length && activeFaculty ? (
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <div className="mb-4">
+              <Label>Select Faculty</Label>
+              <Button
+                variant="outline"
+                role="combobox"
+                className={cn(
+                  "w-full justify-between",
+                  !activeFaculty && "text-muted-foreground"
+                )}
+              >
+                {activeFaculty
+                  ? faculties.find((member) => member?.$id === activeFaculty)
+                      ?.name
+                  : "Select member"}
+                <ChevronsUpDown className="opacity-50" />
+              </Button>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-full md:w-[400px] p-0">
+            <Command>
+              <CommandInput placeholder="Search member..." className="h-9" />
+              <CommandList>
+                <CommandEmpty>No members found.</CommandEmpty>
+                <CommandGroup>
+                  {faculties.map((member) => (
+                    <CommandItem
+                      value={member?.name}
+                      key={member?.$id}
+                      onSelect={() => {
+                        setActiveFaculty(member?.$id);
+                        setOpen(false);
+                      }}
+                    >
+                      {member?.name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          member?.$id === activeFaculty
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <></>
+      )}
       <Card className="flex flex-col gap-6">
         <div className="flex items-center justify-between px-5">
           <CardHeader className="px-0">

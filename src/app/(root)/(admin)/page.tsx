@@ -5,6 +5,7 @@ import FeedbackStatsCards from "@/components/home/feedback-stats-card";
 import { getLatestFiveDocuments } from "@/actions/stats.actions";
 import { appwriteConfig } from "@/lib/appwrite/config";
 import { CoursesType, FacultyType, FeedbackType, StudentType } from "@/types";
+import { LatestFeedbacksCard } from "@/components/home/latest-feedbacks-card";
 
 const page = async () => {
   const account = await getAccount();
@@ -33,6 +34,7 @@ const page = async () => {
         courses={courses}
         faculties={faculties}
       />
+      <LatestFeedbacksCard feedbacks={feedbacks.documents} className="w-full" />
     </div>
   );
 };
