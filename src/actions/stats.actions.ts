@@ -6,10 +6,15 @@ import { appwriteConfig } from "@/lib/appwrite/config";
 
 // Get All Documents Common Function
 export async function getLatestFiveDocuments<T>(
-  collectionId: string
+  collectionId: string,
+  extraQueries: string[] = []
 ): Promise<{ documents: T[]; total: number }> {
   const limit = 5;
-  const queries = [Query.orderDesc("$createdAt"), Query.limit(limit)];
+  const queries = [
+    Query.orderDesc("$createdAt"),
+    Query.limit(limit),
+    ...extraQueries,
+  ];
 
   const { databases } = await createSessionClient();
 
