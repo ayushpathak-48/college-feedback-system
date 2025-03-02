@@ -93,7 +93,6 @@ export const CategoryReportClient = () => {
       feedbacks,
       "teaching_quality"
     );
-    console.log({ teaching_quality });
     const communication_skills = transformDataForChart(
       feedbacks,
       "communication_skills"
@@ -152,8 +151,8 @@ export const CategoryReportClient = () => {
               accessibilityLayer
               data={chartData.teaching_quality}
               margin={{
-                left: 12,
-                right: 12,
+                left: 0,
+                right: 0,
               }}
             >
               <CartesianGrid vertical={false} />
@@ -190,7 +189,7 @@ export const CategoryReportClient = () => {
               >
                 <LabelList
                   position="top"
-                  offset={12}
+                  offset={5}
                   className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
@@ -246,8 +245,8 @@ export const CategoryReportClient = () => {
               accessibilityLayer
               data={chartData.communication_skills}
               margin={{
-                left: 12,
-                right: 12,
+                left: 0,
+                right: 0,
               }}
             >
               <CartesianGrid vertical={false} />
@@ -283,7 +282,7 @@ export const CategoryReportClient = () => {
               >
                 <LabelList
                   position="top"
-                  offset={12}
+                  offset={5}
                   className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
@@ -339,8 +338,8 @@ export const CategoryReportClient = () => {
               accessibilityLayer
               data={chartData.student_engagement}
               margin={{
-                left: 12,
-                right: 12,
+                left: 0,
+                right: 0,
               }}
             >
               <CartesianGrid vertical={false} />
@@ -353,7 +352,7 @@ export const CategoryReportClient = () => {
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tickMargin={8}
+                tickMargin={10}
                 minTickGap={32}
                 tickCount={10}
               />
@@ -376,7 +375,7 @@ export const CategoryReportClient = () => {
               >
                 <LabelList
                   position="top"
-                  offset={12}
+                  offset={5}
                   className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
@@ -432,8 +431,8 @@ export const CategoryReportClient = () => {
               accessibilityLayer
               data={chartData.subject_knowledge}
               margin={{
-                left: 12,
-                right: 12,
+                left: 0,
+                right: 0,
               }}
             >
               <CartesianGrid vertical={false} />
@@ -469,7 +468,7 @@ export const CategoryReportClient = () => {
               >
                 <LabelList
                   position="top"
-                  offset={12}
+                  offset={5}
                   className="fill-black"
                   fontSize={12}
                   formatter={(value) => {
@@ -528,8 +527,8 @@ export const CategoryReportClient = () => {
               accessibilityLayer
               data={chartData.punctuality_and_discipline}
               margin={{
-                left: 12,
-                right: 12,
+                left: 0,
+                right: 0,
               }}
             >
               <CartesianGrid vertical={false} />
@@ -577,7 +576,7 @@ export const CategoryReportClient = () => {
               >
                 <LabelList
                   position="top"
-                  offset={12}
+                  offset={5}
                   className="fill-black"
                   fontSize={12}
                   formatter={(value) => {

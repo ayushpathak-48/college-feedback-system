@@ -71,7 +71,6 @@ const transformDataForChart = (data, key) => {
     facultyMap[facultyId].value += parseFloat(ele?.[key]) || 0;
     facultyMap[facultyId].count += 1;
   });
-  console.log({ facultyMap });
   return Object.values(facultyMap).map((faculty) => ({
     key: faculty.key,
     id: faculty.id,
@@ -113,10 +112,6 @@ export const FacultyMemberReportClient = ({
     }
     setIsPageLoading(false);
   }, [feedbacks, activeFacultyMember]);
-
-  useEffect(() => {
-    console.log({ reportData });
-  }, [reportData]);
 
   useEffect(() => {
     const teaching_quality = transformDataForChart(

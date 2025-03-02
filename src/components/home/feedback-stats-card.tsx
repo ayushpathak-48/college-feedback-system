@@ -1,54 +1,41 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { ChartColumn } from "lucide-react";
 import { AverageStatsCard } from "../average-stats-card";
-import {
-  CoursesType,
-  FacultyMemberType,
-  FacultyType,
-  StudentType,
-} from "@/types";
-import { useDataStore } from "@/stores/data.store";
+import { CoursesType, FacultyType, FeedbackType, StudentType } from "@/types";
 
 const FeedbackStatsCards = ({
+  feedbacks,
   students,
   courses,
   faculties,
-  facultyMembers,
 }: {
-  students: StudentType[];
-  courses: CoursesType[];
-  faculties: FacultyType[];
-  facultyMembers: FacultyMemberType[];
+  feedbacks?: { documents: FeedbackType[]; total: number };
+  students?: { documents: StudentType[]; total: number };
+  courses?: { documents: CoursesType[]; total: number };
+  faculties?: { documents: FacultyType[]; total: number };
 }) => {
-  const feedbacks = useDataStore((state) => state.feedbacks);
   return (
     <div className="py-8 flex items-center flex-wrap gap-6">
       <AverageStatsCard
         label="Total Feedbacks"
         icon={ChartColumn}
-        value={feedbacks?.length?.toString()}
+        value={feedbacks?.total?.toString()}
       />
       <AverageStatsCard
         label="Total Students"
         icon={ChartColumn}
-        value={students && students?.length?.toString()}
+        value={students && students?.total?.toString()}
       />
       <AverageStatsCard
         label="Total Faculties"
         icon={ChartColumn}
-        value={faculties && faculties?.length?.toString()}
+        value={faculties && faculties?.total?.toString()}
       />
       <AverageStatsCard
         label="Total Courses"
         icon={ChartColumn}
-        value={courses && courses?.length?.toString()}
-      />
-      <AverageStatsCard
-        label="Total Faculty Members"
-        icon={ChartColumn}
-        value={facultyMembers && facultyMembers?.length?.toString()}
+        value={courses && courses?.total?.toString()}
       />
     </div>
   );

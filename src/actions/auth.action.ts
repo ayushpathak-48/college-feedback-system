@@ -32,7 +32,6 @@ export async function signInAccount(form: SigninType) {
     const student = await getStudentByEnrollmentId(
       parsedBody.data.email_or_enrollment
     );
-    console.log({ student });
     if (student.success && student.data?.email_id) {
       email = student.data?.email_id;
     } else {
