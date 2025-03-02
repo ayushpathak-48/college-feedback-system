@@ -74,6 +74,13 @@ export const routes = [
     accessible: ["admin"],
   },
   {
+    label: "Courses",
+    href: "/courses",
+    icon: HashIcon,
+    activeIcon: HashIcon,
+    accessible: ["admin"],
+  },
+  {
     label: "Faculty Members",
     href: "/faculty-members",
     icon: UserSquareIcon,
@@ -85,13 +92,6 @@ export const routes = [
     href: "/students",
     icon: UsersIcon,
     activeIcon: UsersIcon,
-    accessible: ["admin"],
-  },
-  {
-    label: "Courses",
-    href: "/courses",
-    icon: HashIcon,
-    activeIcon: HashIcon,
     accessible: ["admin"],
   },
   {
