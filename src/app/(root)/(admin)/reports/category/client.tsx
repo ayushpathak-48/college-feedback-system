@@ -175,7 +175,7 @@ export const CategoryReportClient = () => {
   }, [feedbacks]);
 
   useEffect(() => {
-    if (faculties?.length) {
+    if (faculties?.length && !activeFaculty) {
       setActiveFaculty(faculties[0]?.$id);
     }
   }, [faculties]);
