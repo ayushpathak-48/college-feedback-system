@@ -33,3 +33,23 @@ export const UpdatePasswordSchema = z.object({
     .min(8, { message: "Password should be minimum 8 characters long" }),
 });
 export type UpdatePasswordSchemaType = z.infer<typeof UpdatePasswordSchema>;
+
+export const UpdateStudentPasswordSchema = z.object({
+  oldPassword: z
+    .string()
+    .min(1, { message: "Old password is required" })
+    .min(8, { message: "Old password should be minimum 8 characters long" }),
+  newPassword: z
+    .string()
+    .min(1, { message: "New Password is required" })
+    .min(8, { message: "New Password should be minimum 8 characters long" }),
+  repeatNewPassword: z
+    .string()
+    .min(1, { message: "Repeat new password is required" })
+    .min(8, {
+      message: "Repeat new password should be minimum 8 characters long",
+    }),
+});
+export type UpdateStudentPasswordSchemaType = z.infer<
+  typeof UpdateStudentPasswordSchema
+>;

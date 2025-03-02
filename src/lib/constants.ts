@@ -32,16 +32,20 @@ export const pathnameMap = {
     title: "All Courses",
     description: "View and manage all streams list here",
   },
-  "submit-feedback": {
-    title: "Submit Feedback",
-    description: "Submit your feedback. It's totally anonymous",
-  },
   reports: {
     title: "Reports and Summary",
     description: "View all the reports based on the feedback",
   },
   "feedback-settings": {
     title: "Feedback Settings",
+    description: "",
+  },
+  "submit-feedback": {
+    title: "Submit Feedback",
+    description: "Submit your feedback. It's totally anonymous",
+  },
+  profile: {
+    title: "Manage Profile",
     description: "",
   },
 };
@@ -99,6 +103,13 @@ export const routes = [
     href: "/submit-feedback",
     icon: ClipboardListIcon,
     activeIcon: ClipboardListIcon,
+    accessible: ["student"],
+  },
+  {
+    label: "Profile",
+    href: "/profile",
+    icon: UserSquareIcon,
+    activeIcon: UserSquareIcon,
     accessible: ["student"],
   },
   {

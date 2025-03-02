@@ -35,6 +35,8 @@ import {
   EditStudentSchemaType,
   StudentSchema,
   StudentSchemaType,
+  UpdateStudentPasswordSchema,
+  UpdateStudentPasswordSchemaType,
 } from "@/schema/students.schema";
 import { deleteAccount, getAccount, signUpAccount } from "./auth.action";
 import { defaultStudentPassword } from "@/lib/constants";
@@ -799,7 +801,7 @@ export async function getStudentById(id: string) {
 export async function getStudentByEmail(email: string) {
   try {
     const { databases } = await createSessionClient();
-    const singleFaculty = await databases.listDocuments<StudentType>(
+    const singleStudent = await databases.listDocuments<StudentType>(
       appwriteConfig.databaseId,
       appwriteConfig.studentsCollectionId,
       [Query.equal("email_id", email)]
@@ -807,7 +809,7 @@ export async function getStudentByEmail(email: string) {
     return {
       success: true,
       message: "Single student by email",
-      data: singleFaculty.documents[0],
+      data: singleStudent.documents[0],
     };
   } catch (error: any) {
     return {
@@ -927,6 +929,41 @@ export async function deleteStudent(documentId: string, accountId: string) {
             : JSON.stringify(error)
           : error,
     };
+  }
+}
+
+export async function updateStudentPassword(
+  form: UpdateStudentPasswordSchemaType
+) {
+  const parsedBody = UpdateStudentPasswordSchema.safeParse(form);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+  const { account } = await createSessionClient();
+
+  const { oldPassword, newPassword, repeatNewPassword } = parsedBody.data;
+
+  if (newPassword != repeatNewPassword) {
+    return {
+      success: false,
+      message: "Unmatched error",
+      error: "New password and repeat new password doesn't match",
+    };
+  }
+
+  try {
+    const updatedStudentPassword = await account.updatePassword(
+      newPassword,
+      oldPassword
+    );
+
+    return {
+      success: true,
+      message: "Password updated successfully",
+      data: updatedStudentPassword,
+    };
+  } catch (error) {
+    return { success: false, message: "Sign Up failed", error };
   }
 }
 
