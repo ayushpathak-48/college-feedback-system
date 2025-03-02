@@ -27,7 +27,7 @@ export type StudentType = Models.Document & {
   enrollment_id: string;
   email_id: string;
   name: string;
-  gender: string;
+  gender: GENDER;
   current_semester: string;
   course: CoursesType;
   submittedFacultyMemberReviews: FacultyType[];

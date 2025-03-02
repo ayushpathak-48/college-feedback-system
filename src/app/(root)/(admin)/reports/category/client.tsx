@@ -20,16 +20,15 @@ import {
 } from "@/components/ui/chart";
 import { DottedSeparator } from "@/components/DottedSeparator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AverageStatsCard } from "@/components/average-stats-card";
-import { ChartColumn } from "lucide-react";
-import { StudentType } from "@/types";
+// import { AverageStatsCard } from "@/components/average-stats-card";
+// import { ChartColumn } from "lucide-react";
 
 const chartConfig = {
   views: {
     label: "label",
   },
   value: {
-    label: "Desktop",
+    label: "Avg. rating",
     color: "",
   },
 } satisfies ChartConfig;
@@ -62,11 +61,7 @@ const transformDataForChart = (data, key) => {
   }));
 };
 
-export const CategoryReportClient = ({
-  students,
-}: {
-  students: StudentType[];
-}) => {
+export const CategoryReportClient = () => {
   const feedbacks = useDataStore((state) => state.feedbacks);
   const [chartData, setChartData] = useState({
     teaching_quality: [],
@@ -108,38 +103,7 @@ export const CategoryReportClient = ({
 
   return (
     <div>
-      <div className="py-8 flex items-center flex-wrap gap-6">
-        <AverageStatsCard
-          label="Total Feedbacks"
-          icon={ChartColumn}
-          value={feedbacks?.length?.toString()}
-        />
-        <AverageStatsCard
-          label="Total Students given feedback"
-          icon={ChartColumn}
-          value={
-            students &&
-            students
-              ?.filter(
-                ({ submittedFacultyMemberReviews }) =>
-                  submittedFacultyMemberReviews &&
-                  submittedFacultyMemberReviews?.length > 0
-              )
-              ?.length?.toString()
-          }
-        />
-        <AverageStatsCard
-          label="Total Comments"
-          icon={ChartColumn}
-          value={
-            feedbacks &&
-            feedbacks
-              ?.filter(({ comment }) => comment && comment != "")
-              ?.length?.toString()
-          }
-        />
-      </div>
-      <DottedSeparator />
+      {/* <DottedSeparator /> */}
       <Card className="flex flex-col gap-6">
         <CardHeader>
           <CardTitle>Teaching Quality</CardTitle>
@@ -176,7 +140,7 @@ export const CategoryReportClient = ({
                     className="w-[150px]"
                     nameKey="value"
                     labelFormatter={(value) => {
-                      return value;
+                      return `${value}`;
                     }}
                   />
                 }

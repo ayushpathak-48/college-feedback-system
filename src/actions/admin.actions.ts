@@ -89,11 +89,16 @@ export async function getAllFaculties() {
       message: "All faculties",
       data: allFaculties,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get faculties",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -111,11 +116,16 @@ export async function getFacultyById(id: string) {
       message: "Single Faculty By Id",
       data: singleFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get Single Faculty",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -143,11 +153,16 @@ export async function addNewFaculty(form: FacultySchemaType) {
       message: "Faculty added Successfully",
       data: createdFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add faculty",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -175,11 +190,16 @@ export async function updateFaculty(form: EditFacultySchemaType) {
       message: "Faculty added Successfully",
       data: createdFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add faculty",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -197,11 +217,16 @@ export async function deleteFaculty(id: string) {
       success: true,
       message: "Faculty deleted Successfully",
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add faculty",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -221,11 +246,16 @@ export async function getFacultyMemberById(member_id: string = "") {
       message: "All faculty members",
       data: singleFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get faculty members",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -258,11 +288,16 @@ export async function getAllFacultyMembers(faculty_id: string = "") {
       message: "All faculty members",
       data: { documents: data, total: allFacultyMembers.total },
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get faculty members",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -291,11 +326,16 @@ export async function addNewFacultymember(form: FacultyMembersSchemaType) {
       message: "Faculty member added Successfully",
       data: createdFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add faculty member",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -324,11 +364,16 @@ export async function updateFacultyMember(form: EditFacultyMembersSchemaType) {
       message: "Faculty member updated Successfully",
       data: createdFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to update faculty member",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -346,11 +391,16 @@ export async function deleteFacultyMember(id: string) {
       success: true,
       message: "Faculty member deleted Successfully",
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add faculty member",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -367,11 +417,16 @@ export async function getAllCourses() {
       message: "All courses",
       data: allCourses,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get courses",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -390,11 +445,16 @@ export async function getCourseById(id: string) {
       message: "Single courses",
       data: singleCourse,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get single course",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -424,11 +484,16 @@ export async function addNewCourse(form: CourseSchemaType) {
       message: "Course added Successfully",
       data: createdCourse,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add course",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -458,11 +523,16 @@ export async function updateCourse(form: EditCourseSchemaType) {
       message: "Faculty member updated Successfully",
       data: createdFaculty,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to update faculty member",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -480,11 +550,16 @@ export async function deleteCourse(id: string) {
       success: true,
       message: "Course deleted Successfully",
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add course",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -563,12 +638,17 @@ export async function addNewStudent(form: StudentSchemaType) {
       message: "Student added Successfully",
       data: createdStudent,
     };
-  } catch (error) {
+  } catch (error: any) {
     await deleteAccount(studentAccount.data.$id);
     return {
       success: false,
       message: "Failed to add student",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -578,7 +658,7 @@ export async function updateUserLabels(accountId: string, labels: string[]) {
     const { users } = await createAdminClient();
     await users.updateLabels(accountId, labels);
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.log({ error });
     return false;
   }
@@ -635,11 +715,16 @@ export async function updateStudent(form: EditStudentSchemaType) {
       message: "Student updated Successfully",
       data: updatedStudent,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to update student",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -655,11 +740,16 @@ export async function getAllStudents() {
       message: "All Students",
       data: allStudents,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get students",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -678,11 +768,16 @@ export async function getStudentById(id: string) {
       message: "Single student",
       data: singleStudent,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get single student",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -700,11 +795,16 @@ export async function getStudentByEmail(email: string) {
       message: "Single student by email",
       data: singleFaculty.documents[0],
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get Single student",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -747,11 +847,16 @@ export async function updateStudentFeedbackList(faculty_id: string) {
       success: true,
       message: "Updated feedback list in students collection",
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to updated feedback list in students collection",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -770,11 +875,16 @@ export async function deleteStudent(documentId: string, accountId: string) {
       success: true,
       message: "Student deleted Successfully",
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add student",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -843,11 +953,16 @@ export async function addNewFeedback(form: FeedbackSchemaType) {
       message: "Feedback added Successfully",
       data: createdFeedback,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to submit feedback",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -866,11 +981,16 @@ export async function deleteFeedback(id: string) {
       message: "Feedback deleted Successfully",
       data: deletedFeedback,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to add feedback",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -887,11 +1007,16 @@ export async function getAllFeedbacks(queries: string[] = []) {
       message: "All feedbacks",
       data: allFeedbacks,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to get feedbacks",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
@@ -917,11 +1042,16 @@ export async function toggleFeedback(
       message: "Feedback toggled Successfully",
       data: toggled,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to toggle feedback",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { createAdminClient, createSessionClient } from "@/lib/appwrite/client";
@@ -39,11 +40,16 @@ export async function signInAccount(form: SigninType) {
       }
     );
     return { success: true, message: "Sign In Successfully" };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to Signin",
-      error: typeof error == "object" ? JSON.stringify(error) : error,
+      error:
+        typeof error == "object"
+          ? error?.message
+            ? error?.message
+            : JSON.stringify(error)
+          : error,
     };
   }
 }
