@@ -20,9 +20,12 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { LoadingButton } from "@/components/LoadingButton";
 import { APP_TITLE } from "@/lib/constants";
+import { Eye, EyeOff } from "lucide-react";
 
 export const SignInCard = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordType, setPasswordType] = useState("password");
+
   const form = useForm<SigninType>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -78,22 +81,36 @@ export const SignInCard = () => {
               )}
             />
             <FormField
-              name="password"
+              name={"password"}
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter password here"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        type={passwordType}
+                        placeholder="Enter password here"
+                      />
+                      {passwordType == "text" ? (
+                        <Eye
+                          onClick={() => setPasswordType("password")}
+                          className="absolute top-4 right-3 cursor-pointer size-5 text-gray-600"
+                        />
+                      ) : (
+                        <EyeOff
+                          onClick={() => setPasswordType("text")}
+                          className="absolute top-4 right-3 cursor-pointer size-5 text-gray-600"
+                        />
+                      )}
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <DottedSeparator className="py-2" />
             <LoadingButton
               className="w-full"
               isLoading={isLoading}

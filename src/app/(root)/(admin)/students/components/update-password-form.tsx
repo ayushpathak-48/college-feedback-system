@@ -24,10 +24,13 @@ import {
 
 import { useRouter } from "next/navigation";
 import { updatePassword } from "@/actions/auth.action";
+import { Eye, EyeOff } from "lucide-react";
 
 const UpdatePasswordForm = ({ student }: { student: StudentType }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordType, setPasswordType] = useState("password");
+
   const form = useForm<UpdatePasswordSchemaType>({
     resolver: zodResolver(UpdatePasswordSchema),
     defaultValues: {
@@ -76,11 +79,24 @@ const UpdatePasswordForm = ({ student }: { student: StudentType }) => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter password"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        type={passwordType}
+                        placeholder="Enter password here"
+                      />
+                      {passwordType == "text" ? (
+                        <Eye
+                          onClick={() => setPasswordType("password")}
+                          className="absolute top-4 right-3 cursor-pointer size-5 text-gray-600"
+                        />
+                      ) : (
+                        <EyeOff
+                          onClick={() => setPasswordType("text")}
+                          className="absolute top-4 right-3 cursor-pointer size-5 text-gray-600"
+                        />
+                      )}
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
