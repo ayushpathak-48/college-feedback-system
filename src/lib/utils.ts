@@ -34,6 +34,7 @@ export const getAverageFeedbackStars = (
   feedbacks: FeedbackType[],
   star_key: string
 ) => {
+  if (feedbacks.length == 0) return "0";
   const totalStars = feedbacks.reduce(
     (sum, feedback) => sum + parseInt(feedback[star_key]),
     0

@@ -48,7 +48,7 @@ export const pathnameMap = {
 
 export const defaultMap = {
   title: "Home",
-  description: "Monitor all your projects and tasks here",
+  description: "",
 };
 
 export const routes = [

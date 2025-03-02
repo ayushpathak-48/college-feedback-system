@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChartBarIcon } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
+import { ReactNode } from "react";
 
 export const AverageStatsCard = ({
-  icon,
+  icon = ChartBarIcon,
   label,
   value = "",
 }: {
-  icon: any;
+  icon?: any;
   label: string;
-  value?: string | undefined | null;
+  value?: ReactNode | string | undefined | null;
 }) => {
   const Icon = icon;
   return (
     <Card className="min-w-[250px] flex-1 grow">
       <CardContent className="flex flex-col items-start gap-4 p-3 px-5">
         <div className="flex items-center justify-between w-full">
-          <p className="text-2xl font-bold">{value}</p>
+          <div className="text-2xl font-bold">{value}</div>
           <div className="bg-gray-100 rounded-full p-3 dark:bg-gray-800">
             <Icon className="w-6 h-6 text-primary" />
           </div>
