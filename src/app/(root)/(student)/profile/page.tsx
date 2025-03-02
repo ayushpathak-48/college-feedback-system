@@ -8,9 +8,6 @@ import ProfilePasswordUpdateForm from "./components/profile-password-update-form
 const page = async () => {
   const account = await getAccount();
   if (!account) return redirect("/sign-in");
-  if (!account?.student) {
-    return null;
-  }
   return (
     <div className="flex flex-col gap-10">
       <ProfileForm student={account?.student} />
