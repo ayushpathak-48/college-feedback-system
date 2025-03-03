@@ -1,12 +1,9 @@
 {
-    "name": "College Feedback Management",
-    "short_name": "College Feedback",
-    "icons": [
-      {
-        "src": "/logo.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      }
-    ]
-  }
-  
+  "name": "Feedbun",
+  "short_name": "Feedbun",
+  "description": "College Feedback management app",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}
