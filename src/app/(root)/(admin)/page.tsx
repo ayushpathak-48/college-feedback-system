@@ -1,5 +1,3 @@
-import { getAccount } from "@/actions/auth.action";
-import { redirect } from "next/navigation";
 import React from "react";
 import FeedbackStatsCards from "@/components/home/feedback-stats-card";
 import { getLatestFiveDocuments } from "@/actions/stats.actions";
@@ -8,12 +6,6 @@ import { CoursesType, FacultyType, FeedbackType, StudentType } from "@/types";
 import { LatestFeedbacksCard } from "@/components/home/latest-feedbacks-card";
 
 const page = async () => {
-  const account = await getAccount();
-  if (!account) {
-    return redirect("/sign-in");
-  }
-
-  if (!account.labels.includes("admin")) return redirect("/submit-feedback");
   const feedbacks = await getLatestFiveDocuments<FeedbackType>(
     appwriteConfig.feedbacksCollectionId
   );
