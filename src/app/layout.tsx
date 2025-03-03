@@ -13,7 +13,7 @@ const lexendDeca = Lexend_Deca({
 export const metadata: Metadata = {
   title: `${APP_TITLE} - College Feedback Management`,
   description: `${APP_TITLE} - College Feedback Management app to submit feedback about the teachers anonymously`,
-  icons: "/favicon.png",
+  icons: "/logo.png",
   manifest: "/manifest.json",
 };
 
