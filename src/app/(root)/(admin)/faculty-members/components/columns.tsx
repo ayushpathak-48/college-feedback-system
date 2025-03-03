@@ -88,7 +88,7 @@ export const columns: ColumnDef<FacultyMemberType>[] = [
     },
   },
   {
-    accessorKey: "faculty",
+    accessorKey: "faculty.name",
     header: ({ column }) => {
       return (
         <Button

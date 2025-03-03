@@ -52,7 +52,7 @@ export const columns: ColumnDef<CoursesType>[] = [
     },
   },
   {
-    accessorKey: "faculty",
+    accessorKey: "faculty.name",
     header: ({ column }) => {
       return (
         <Button
