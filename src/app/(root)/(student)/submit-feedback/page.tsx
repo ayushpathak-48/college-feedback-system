@@ -10,7 +10,7 @@ const Page = async () => {
   if (!account) {
     return redirect("/sign-in");
   }
-  if (!account.labels.includes("student")) return redirect("/submit-feedback");
+  if (!account.labels.includes("student")) return redirect("/");
 
   const isAcceptingFeedback = account?.student?.course?.accepting_feedback;
   const facultyMembers = isAcceptingFeedback

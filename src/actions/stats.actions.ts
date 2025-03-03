@@ -5,11 +5,11 @@ import { Query } from "node-appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
 
 // Get All Documents Common Function
-export async function getLatestFiveDocuments<T>(
+export async function getLimitedDocuments<T>(
   collectionId: string,
-  extraQueries: string[] = []
+  extraQueries: string[] = [],
+  limit: number = 5
 ): Promise<{ documents: T[]; total: number }> {
-  const limit = 5;
   const queries = [
     Query.orderDesc("$createdAt"),
     Query.limit(limit),

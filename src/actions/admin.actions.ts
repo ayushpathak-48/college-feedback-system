@@ -41,7 +41,7 @@ import {
 import { deleteAccount, getAccount, signUpAccount } from "./auth.action";
 import { defaultStudentPassword } from "@/lib/constants";
 import { FeedbackSchema, FeedbackSchemaType } from "@/schema/feedback.schema";
-import { getLatestFiveDocuments } from "./stats.actions";
+import { getLimitedDocuments } from "./stats.actions";
 
 // Get All Documents Common Function
 export async function getAllDocuments<T>(
@@ -274,7 +274,7 @@ export async function getAllFacultyMembers(faculty_id: string = "") {
     const data = await Promise.all(
       allFacultyMembers.documents.map(async (member) => {
         const totalFeedbacks = (
-          await getLatestFiveDocuments<FeedbackType>(
+          await getLimitedDocuments<FeedbackType>(
             appwriteConfig.feedbacksCollectionId,
             [Query.equal("faculty", member.$id)]
           )
@@ -470,7 +470,7 @@ export async function addNewCourse(form: CourseSchemaType) {
 
   const { name, faculty_id, total_semesters } = parsedBody.data;
 
-  const alreadyTakenName = await getLatestFiveDocuments(
+  const alreadyTakenName = await getLimitedDocuments(
     appwriteConfig.coursesCollectionId,
     [Query.equal("name", name), Query.equal("faculty", faculty_id)]
   );

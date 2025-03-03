@@ -10,7 +10,7 @@ const page = async () => {
   if (!account) {
     return redirect("/sign-in");
   }
-  if (!account.labels.includes("student")) return redirect("/submit-feedback");
+  if (!account.labels.includes("student")) return redirect("/");
 
   return (
     <div className="flex flex-col gap-10">

@@ -28,7 +28,7 @@ export const columns: ColumnDef<FeedbackType>[] = [
     sortingFn: (rowA, rowB) => rowA.index - rowB.index,
   },
   {
-    accessorKey: "faculty_member_name",
+    accessorKey: "faculty.name",
     header: ({ column }) => {
       return (
         <Button
@@ -245,7 +245,7 @@ export const columns: ColumnDef<FeedbackType>[] = [
     },
   },
   {
-    accessorKey: "faculty_name",
+    accessorKey: "faculty.faculty.name",
     header: ({ column }) => {
       return (
         <Button
