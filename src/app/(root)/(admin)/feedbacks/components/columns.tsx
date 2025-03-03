@@ -6,6 +6,7 @@ import { ArrowUpDown, StarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { CustomTooltip } from "@/components/custom-tooltip";
 
 export const columns: ColumnDef<FeedbackType>[] = [
   {
@@ -67,8 +68,16 @@ export const columns: ColumnDef<FeedbackType>[] = [
     cell: ({ row }) => {
       const comment = row?.original?.comment;
       return (
-        <div>
-          <span className={cn("truncate")}>{comment}</span>
+        <div className="max-w-md truncate">
+          <CustomTooltip delayDuration={0} content={comment}>
+            <span>
+              {comment ? (
+                comment
+              ) : (
+                <span className="text-xs text-gray-400">No Comments</span>
+              )}
+            </span>
+          </CustomTooltip>
         </div>
       );
     },

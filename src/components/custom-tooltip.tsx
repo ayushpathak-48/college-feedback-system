@@ -11,17 +11,23 @@ export const CustomTooltip = ({
   children,
   content,
   side = "top",
+  delayDuration = 700,
 }: {
   children: ReactNode;
   content: ReactNode | string;
   side?: "top" | "right" | "bottom" | "left";
+  delayDuration?: number;
 }) => {
   return (
     <>
       <TooltipProvider>
-        <Tooltip>
+        <Tooltip delayDuration={delayDuration}>
           <TooltipTrigger asChild>{children}</TooltipTrigger>
-          <TooltipContent className="bg-black text-white" side={side}>
+          <TooltipContent
+            hidden={!content || content == ""}
+            className="bg-black text-white"
+            side={side}
+          >
             {content}
             <Arrow />
           </TooltipContent>
